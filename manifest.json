@@ -1,0 +1,23 @@
+{
+  "name": "Maple.fm Watchlist",
+  "version": "1.1",
+  "description":
+    "Shows off desktop notifications for each Maplestory's item in the wishlist",
+  "icons": {"16": "maple.png", "48": "maple.png", "128": "maple.png"},
+  "permissions": [
+    "notifications",
+    "*://maple.fm/*"
+  ],
+  "browser_action": {
+    "default_icon": "maple.png",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "background": { "scripts": ["jquery-2.1.1.min.js", "background.js"] },
+  "manifest_version": 2,
+
+  // crbug.com/134315
+  "web_accessible_resources": [
+    "48.png"
+  ]
+}
