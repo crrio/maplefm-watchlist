@@ -87,7 +87,8 @@ input:focus {outline: none; }
 
 .container{
   width: 300px;
-  height: 500px;
+  height: 560px;
+  background-color: #F9F9F9;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -102,6 +103,9 @@ input:focus {outline: none; }
   height: 400px;
   overflow-x: hidden;
   top: 107px;
+  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
 }
 
 .showitem {
@@ -177,4 +181,24 @@ input:focus {outline: none; }
   background-repeat: no-repeat;
   left: 133px;
   top: 15px;
+}
+
+.disclaimer{
+  position: fixed;
+  bottom: 18px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  opacity: 0.4;
+}
+
+.octicon-x{
+  position: absolute;
+  right: 24px;
+  top: 28px;
+  opacity: 0.4;
 }

@@ -23,7 +23,7 @@ window.onload = function(){
            }
         }
       }
-      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div></div>" );
+      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\"></span></div>" );
     }
   
     $('.add-item').submit( function(event){
@@ -35,8 +35,11 @@ window.onload = function(){
               return false; 
           }
           for( var j=0; j < db.length; j++){
-             if( newItemName == db[j].b ){
+             var str1 = newItemName;
+             var str2 = db[j].b;
+             if( str1.toLowerCase() == str2.toLowerCase() ){
                 id = db[j].a;
+                newItemName = str2;
                 break; 
              }
           }

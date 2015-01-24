@@ -1,9 +1,9 @@
 var wishlist = [
-                {"name":"Lightning God Ring","price":"9999999998"},
+                /*{"name":"Lightning God Ring","price":"9999999998"},
                 {"name":"Ice Cold Red", "price": "2999999999"},
                 {"name":"Cubic Chaos Blade", "price": "24999999"},
                 {"name":"[A] Nebulite (DEX %)", "price": "2999999999"},
-                {"name":"[A] Nebulite (STR %)", "price": "2999999999"},
+                {"name":"[A] Nebulite (STR %)", "price": "2999999999"},*/
                ];
 
 var db;
