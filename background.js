@@ -13,6 +13,7 @@ var notId = 0;
 $.getJSON("http://maple.fm/api/list/items", function(data) {
     db = data;
     console.log(db);
+    additem("Fafnir Mana Cradle", "30000000");
 });
 
 function show() {
@@ -96,10 +97,12 @@ setInterval(function() {
   //});
 }, 60000);
 
-function getWishlist(){
-  return wishlist;
+
+function additem(itemName,itemPrice) {
+	wishlist.push({"name": itemName,"price": itemPrice});
 }
 
 function deletionCallback(notID) {
 	console.log("Succesfully deleted " + notID + " notification" );
 }
+
