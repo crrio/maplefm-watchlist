@@ -60,7 +60,7 @@ window.onload = function(){
           }
       
           $('.preview').css('left', 0);
-          $('.page1').css('left', -302+'px');
+          $('.page1').css('left', -332+'px');
           $('.pvicon').attr('src', 'http://maple.fm/static/image/icon/' + id +'.png');
           $('.pvname').text(newItemName);
           return false;
@@ -85,7 +85,7 @@ window.onload = function(){
                confirmButtonText: "OK",
             
           }, function(){
-            $('.preview').css('left', 301+'px');
+            $('.preview').css('left', 331+'px');
             $('.page1').css('left', 0+'px');
             $('.addbox').val("");
             $('.addprice').val("");
