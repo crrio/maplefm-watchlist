@@ -22,6 +22,8 @@
      -->
     <script src="jquery-1.11.2.min.js"></script>
     <script src="popup.js"></script>
+    <script src="bower_components/sweetalert/lib/sweet-alert.min.js"></script> 
+    <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/lib/sweet-alert.css">
     <link href="popup.css" type="text/css" rel="stylesheet">
   </head>
   <body>
@@ -29,25 +31,27 @@
       <div class="header">
           <div class="maplefm"></div>
       </div>
+          
       <div class="searchbar">
         <form class="add-item">
-            <input class="addbox" type="text" placeholder="Type to add new item">
+            <input class="addbox page1" type="text" placeholder="Type to add new item">
+        </form>
+        <form class="add-price">
+            <input class="addprice preview" type="text" placeholder="How much are you willing to pay">
         </form>
         <div class="searchbtn"></div>
       </div>
-      <div class="watchlist">
+      <div class="watchlist page1">
         <div class="item">
-          <img class="icon"/>
+          <img class="item-icon"/>
           <div class="name">Fafnir Mana Cradle</div>
           <div class="price">300,000,000 meso or less</div>
           <div class="closebtn"></div>
         </div>
-        <div class="item">
-          <div class="icon"></div>
-          <div class="name">Fafnir Mana Cradle</div>
-          <div class="price">300,000,000 meso or less</div>
-          <div class="closebtn"></div>
-        </div>
+      </div>
+      <div class="preview showitem">
+          <img class="item-icon pvicon"/>
+          <div class="pvname">Yo wassap</div>
       </div>
     </div>
   </body>
