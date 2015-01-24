@@ -6,7 +6,8 @@
   "icons": {"16": "maple.png", "48": "maple.png", "128": "maple.png"},
   "permissions": [
     "notifications",
-    "*://maple.fm/*"
+    "*://maple.fm/*",
+    "storage"
   ],
   "browser_action": {
     "default_icon": "maple.png",

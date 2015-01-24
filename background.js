@@ -9,8 +9,9 @@ var wishlist = [
 var notId = 0;
 
 function show() {
-
+  
     $.getJSON("http://maple.fm/api/2/search?server=8&stats=0&desc=0", function(data) {
+  
         console.log(data); // use data as a generic object
         var json = data.fm_items;
         notId = 0;
@@ -59,9 +60,12 @@ if (!localStorage.isInitialized) {
   localStorage.isActivated = true;   // The display activation.
   localStorage.frequency = 1;        // The display frequency, in minutes.
   localStorage.isInitialized = true; // The option initialization.
+  localStorage.watchlist = wishlist;
 }
 
-if (JSON.parse(localStorage.isActivated)) { show(); }
+if (JSON.parse(localStorage.isActivated)) { 
+    show();
+}
 
 var interval = 0; // The display interval, in minutes.
 
@@ -84,6 +88,10 @@ setInterval(function() {
     }
   //});
 }, 60000);
+
+function getWishlist(){
+  return wishlist;
+}
 
 function deletionCallback(notID) {
 	console.log("Succesfully deleted " + notID + " notification" );
