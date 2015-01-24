@@ -20,41 +20,26 @@ input:focus {outline: none; }
 
 .addbox {
   display: block;
-  top: 65px;
   width: 100%;
   text-align: center;
   border: 0px;
   background-color: rgb(255, 255, 255);
   color: rgb(16, 16, 16);
-  font-size: 13px;
-  letter-spacing: 0.5px;
+  font-size: 14px;
   font-weight: 200;
   font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
   position: fixed;
   padding: 2px;
   height: 40px;
   -webkit-appearance: none;
-  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  z-index: 100;
-}
-
-.header{
-  width: 300px;
-  height: 65px;
-  background-color: #ffffff;
-  position: fixed;
-  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  z-index: 100;
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.08);
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.08);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.08);
 }
 
 .container{
   width: 300px;
   height: 500px;
-  overflow: hidden;
 }
 
 .watchlist {
@@ -62,7 +47,7 @@ input:focus {outline: none; }
   width: 100%;
   height: 500px;
   overflow-x: hidden;
-  top: 107px;
+  top: 44px;
 }
 
 .item {
@@ -70,9 +55,9 @@ input:focus {outline: none; }
   width: 300px;
   height: 72px;
   
-  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.08);
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.08);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.08);
 }
 
 .icon {
@@ -105,14 +90,4 @@ input:focus {outline: none; }
   font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #8e8e8e;
   letter-spacing: 0.5px;
-}
-
-.maplefm {
-  position: absolute;
-  background: url(maplefm-icon.png);
-  width: 49px;
-  height: 49px;
-  background-repeat: no-repeat;
-  left: 133px;
-  top: 15px;
 }
