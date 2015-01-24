@@ -81,7 +81,6 @@ input:focus {outline: none; }
   position: relative;
   top: 17px;
   left: 21px;
-  background: url(sample-icon.png);
   width: 35px;
   height: 35px;
 }
@@ -91,7 +90,8 @@ input:focus {outline: none; }
   position: absolute;
   top: 17px;
   left: 79px;
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 13;
   font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
   letter-spacing: 0.5px;
 }

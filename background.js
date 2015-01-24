@@ -6,7 +6,14 @@ var wishlist = [
                 {"name":"[A] Nebulite (STR %)", "price": "2999999999"},
                ];
 
+var db;
+  
 var notId = 0;
+
+$.getJSON("http://maple.fm/api/list/items", function(data) {
+    db = data;
+    console.log(db);
+});
 
 function show() {
   
