@@ -55,6 +55,10 @@ window.onload = function(){
              return false;
           }
       
+          if( newItemName.search("Nebulite") >= 0 && newItemName.charAt(0)=='['){
+              id = "nebulite-" + newItemName.charAt(1);
+          }
+      
           $('.preview').css('left', 0);
           $('.page1').css('left', -302+'px');
           $('.pvicon').attr('src', 'http://maple.fm/static/image/icon/' + id +'.png');
