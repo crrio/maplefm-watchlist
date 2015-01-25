@@ -4,6 +4,9 @@ var wishlist = bgpage.wishlist;
 var db = bgpage.db;
 
 var newItemName;
+
+var fmservers = ["Scania","Windia","Bera","Broa","Khaini","Ymck","Gazed","Bellonova","Renegades"];
+
 window.onload = reload;
 
 function addUI(iconIndex, idIndex){
@@ -13,6 +16,11 @@ function addUI(iconIndex, idIndex){
 }
 
 function reload(){
+  
+    var s = document.getElementsByTagName('select');
+    for (var i = 0; i < s.length; i++) {
+        selectReplacement(s[i]);
+    }
   
     $.cookie.json = true;
   
@@ -126,4 +134,92 @@ function reload(){
           });
     });
 }
+
+function selectReplacement(obj) {
+  
+    obj.className += ' replaced';
+    var ul = document.createElement('ul');
+    ul.className = 'selectReplacement';
+    ul.className += ' server';
+    var opts = obj.options;
+    for (var i = 0; i < opts.length; i++) {
+        var selectedOpt;
+        if (opts[i].selected) {
+            selectedOpt = i;
+            break;
+        } else {
+            selectedOpt = 0;
+        }
+    }
+    for (var i = 0; i < opts.length; i++) {
+        var li = document.createElement('li');
+        var txt = document.createTextNode(opts[i].text);
+        var img = document.createElement('img');
+        img.className = 'server-icon';
+        img.src = "http://maple.fm/img/worlds/"+opts[i].id+".png";
+        
+        li.appendChild(img);
+        li.appendChild(txt);
+        li.selIndex = opts[i].index;
+        li.selectID = obj.id;
+        li.onclick = function() {
+            selectMe(this);
+        }
+        if (i == selectedOpt) {
+            li.className = 'selected';
+            li.onclick = function() {
+                this.parentNode.className += ' selectOpen';
+                this.onclick = function() {
+                    selectMe(this);
+                }
+            }
+        }
+        if (window.attachEvent) {
+            li.onmouseover = function() {
+                this.className += ' hover';
+            }
+            li.onmouseout = function() {
+                this.className = this.className.replace(new RegExp(" hover\\b"), '');
+            }
+        }
+        ul.appendChild(li);
+    }
+    obj.parentNode.appendChild(ul);
+}
+
+function selectMe(obj) {
+    var lis = obj.parentNode.getElementsByTagName('li');
+    for (var i = 0; i < lis.length; i++) {
+        if (lis[i] != obj) {
+            lis[i].className = '';
+            lis[i].onclick = function() {
+                selectMe(this);
+            }
+        } else {
+            setVal(obj.selectID, obj.selIndex);
+            obj.className = 'selected';
+            obj.parentNode.className = obj.parentNode.className.replace(new RegExp(" selectOpen\\b"), '');
+            obj.onclick = function() {
+                obj.parentNode.className += ' selectOpen';
+                this.onclick = function() {
+                    selectMe(this);
+                }
+            }
+        }
+    }
+}
+
+function setVal(objID, selIndex) {
+    var obj = document.getElementById(objID);
+    obj.selectedIndex = selIndex;
+}
+
+function setForm() {
+    var s = document.getElementsByTagName('select');
+    for (var i = 0; i < s.length; i++) {
+        selectReplacement(s[i]);
+    }
+}
+
+function closeSel(obj) {}
 

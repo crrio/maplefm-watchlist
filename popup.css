@@ -73,7 +73,7 @@ input:focus {outline: none; }
   box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  z-index: 100;
+  z-index: 200;
 }
 
 .page1{
@@ -144,17 +144,18 @@ input:focus {outline: none; }
 .server-icon{
   display: block;
   position: relative;
-  top: 3px;
-  float: right;
-  margin-right: 8px;
-  width: 14px;
-  height: 14px;
+  float: left;
+  top: 5px;
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
 }
 
 .server-name{
   display: block;
   position: relative;
-  margin-right: 3px;
+  margin-right: 5px;
+  float: left;
   top: 0px;
   float: right;
   color: white;
@@ -170,9 +171,11 @@ input:focus {outline: none; }
   position: absolute;
   right: 19px;
   top: 19px;
-  background-color: #585858;
+  /*background-color: #3B3B3D;*/
   padding: 4px 6px;
   border-radius: 5px;
+  z-index: 102;
+  width: auto;
 }
 
 .item {
@@ -270,5 +273,62 @@ input:focus {outline: none; }
 .octicon-x:hover{
   background-color: #535353;
   color: white;
-  transition: .3s
+  transition: .3s;
+  cursor: pointer;
+}
+
+/* selection dropdown */
+
+ul.selectReplacement {
+  float: right;
+  margin: 0;
+  padding: 0;
+  height: 1.65em;
+  width: 100px;
+}
+ul.selectReplacement li {
+  background: #4e4e4e;
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  font-size: 11px;
+  line-height: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 1px 10px 1px 5px;
+  width: 80px;
+}
+ul.selectOpen li {
+  display: block;
+}
+
+ul.selectReplacement li.selected {
+  float: right;
+  color: #393939;
+  background: white;
+  color: #fff;
+  background: #4e4e4e;
+  /*border: 1px #e0e0e0 solid;*/
+  display: inline-block;
+  width: auto;
+  border-radius: 5px;
+}
+ul.selectOpen li.selected {
+  float: none;
+  color: #fff;
+  background: #242424;
+  border: 0px;
+  width: 80px;
+  display: block;
+  border-radius: 0px;
+}
+
+ul.selectOpen li:hover,
+ul.selectOpen li.selected:hover{
+  background: #242424;
+  color: #fff;
+}
+
+select.replaced {
+  display: none;
 }
