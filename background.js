@@ -113,6 +113,7 @@ setInterval(function() {
 function additem(itemName,itemPrice) {
 	wishlist.push({"name": itemName,"price": itemPrice});
     $.cookie('wishlist', wishlist);
+    show();
 }
 
 function removeitem(itemName){
