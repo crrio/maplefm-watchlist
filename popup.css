@@ -202,8 +202,15 @@ input:focus {outline: none; }
 
 .octicon-x{
   position: absolute;
-  right: 10px;
-  top: 18px;
-  padding: 10px;
+  right: 15px;
+  top: 26px;
+  padding: 2px 5px;
+  border-radius: 50%;
   opacity: 0.4;
+}
+
+.octicon-x:hover{
+  background-color: #535353;
+  color: white;
+  transition: .3s
 }
