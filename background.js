@@ -34,17 +34,17 @@ function show() {
         console.log(data); // use data as a generic object
         var json = data.fm_items;
         notId = 0;
-        for(var i = 0; i < json.length; i++) {
-            var obj = json[i];
+        $.each(json, function(ind, obj){
             //console.log(obj.name + ' ' + obj.price + ' ' + obj.room);
-            for(var j=0;j < wishlist.length;j++){
-                if(wishlist[j].name == obj.name && parseInt(wishlist[j].price) >= parseInt(obj.price) && parseInt(obj.quantity)>=1 ||
-                   obj.character_name == 'PhasicLiquid' && parseInt(obj.quantity) >=1
-                  ){
-                    //notId = obj.character_name + '_' + obj.id + '_' + obj.price; //+ data.seconds_ago;
+            $.each(wishlist, function(index, result){
+                if(result.name == obj.name && parseInt(result.price) >= parseInt(obj.price) && parseInt(obj.quantity)>=1 ){
+                    
                     var shopname = obj.shop_name;
                     if(shopname.length > 25) shopname  = shopname.substring(0,25) + "...";
-                    var notOption = {
+                
+                  $.getJSON("http://maple.fm/api/items?id="+obj.id, function(data){
+                  var iconid = data.item.icon;               
+                  var notOption = {
                         type : "basic",
                         title: obj.name + " at FM " + obj.room,
                         message: obj.quantity + " pieces at " +obj.price + "\nShop: " + shopname,
@@ -55,9 +55,10 @@ function show() {
 
                     chrome.notifications.create(notId.toString(), notOption, creationCallback);
                     notId++;
+                    });
                 }
-            }
-        }
+            });
+        });
     });
 
 }

@@ -6,6 +6,12 @@ var db = bgpage.db;
 var newItemName;
 window.onload = reload;
 
+function addUI(iconIndex, idIndex){
+    for(var i=0; i<wishlist.length; i++){
+      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + iconIndex[idIndex[wishlist[i].name]] +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ wishlist[i].name + "\"></span></div>" );
+    }
+}
+
 function reload(){
   
     $.cookie.json = true;
@@ -18,24 +24,33 @@ function reload(){
     if( wishlist == undefined )
         wishlist = [];
   
-    for(var i=0; i<wishlist.length; i++){
+    //for(var i=0; i<wishlist.length; i++){
+    
+    var iconIndex = {};
+    var idIndex = {};
+  
+   var count = 0;
+  
+   $.each(wishlist, function(index,result){
       
       var id;
       
-      if( wishlist[i].name.search("Nebulite") >= 0 && wishlist[i].name.charAt(0)=='['){
-          id = "nebulite-" + wishlist[i].name.charAt(1);
-      }
-      
-      else{
-        for( var j=0; j < db.length; j++){
-           if( wishlist[i].name == db[j].b ){
+      for( var j=0; j < db.length; j++){
+           if( result.name == db[j].b ){
               id = db[j].a;
+              idIndex[db[j].b] = id;
               break; 
            }
-        }
       }
-      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ wishlist[i].name + "\"></span></div>" );
-    }
+      
+      $.getJSON("http://maple.fm/api/items?id="+id, function(data){
+          count = count+1;
+          iconIndex[id] = data.item.icon;
+          if( count==wishlist.length )
+             addUI(iconIndex, idIndex);
+      });
+   
+    });
   
     $('.add-item').submit( function(event){
           event.preventDefault();
@@ -66,14 +81,13 @@ function reload(){
              return false;
           }
       
-          if( newItemName.search("Nebulite") >= 0 && newItemName.charAt(0)=='['){
-              id = "nebulite-" + newItemName.charAt(1);
-          }
-      
-          $('.preview').css('left', 0);
-          $('.page1').css('left', -332+'px');
-          $('.pvicon').attr('src', 'http://maple.fm/static/image/icon/' + id +'.png');
-          $('.pvname').text(newItemName);
+          $.getJSON("http://maple.fm/api/items?id="+id, function(data){
+              id = data.item.icon;
+              $('.preview').css('left', 0);
+              $('.page1').css('left', -332+'px');
+              $('.pvicon').attr('src', 'http://maple.fm/static/image/icon/' + id +'.png');
+              $('.pvname').text(newItemName);
+          });
           return false;
       }
     );
