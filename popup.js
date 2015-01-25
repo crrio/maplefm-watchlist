@@ -7,10 +7,16 @@ var newItemName;
 window.onload = reload;
 
 function reload(){
+  
+    $.cookie.json = true;
+  
     console.log("success");
     $('.watchlist').empty();
   
-    wishlist = bgpage.wishlist;
+    wishlist = $.cookie('wishlist');
+    console.log(wishlist);
+    if( wishlist == undefined )
+        wishlist = [];
   
     for(var i=0; i<wishlist.length; i++){
       

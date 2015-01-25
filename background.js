@@ -1,3 +1,5 @@
+$.cookie.json = true;
+
 var wishlist = [
                 /*{"name":"Lightning God Ring","price":"9999999998"},
                 {"name":"Ice Cold Red", "price": "2999999999"},
@@ -5,6 +7,7 @@ var wishlist = [
                 {"name":"[A] Nebulite (DEX %)", "price": "2999999999"},
                 {"name":"[A] Nebulite (STR %)", "price": "2999999999"},*/
                ];
+
 
 var db;
   
@@ -14,6 +17,15 @@ $.getJSON("http://maple.fm/api/list/items", function(data) {
     db = data;
     console.log(db);
 });
+
+if( $.cookie('wishlist') != undefined ){
+    console.log($.cookie('wishlist'));
+    wishlist = $.cookie('wishlist');
+}
+
+else  
+    $.cookie('wishlist', wishlist);
+
 
 function show() {
   
@@ -57,10 +69,11 @@ function creationCallback(notID) {
 
 
 
-var script = document.createElement('script');
-script.src = 'jquery-2.1.1.min.js';
+/*var script = document.createElement('script');
+script.src = 'jquery-1.11.2.min.js';
 script.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(script);
+
+document.getElementsByTagName('head')[0].appendChild(script);*/
 
 // Conditionally initialize the options.
 if (!localStorage.isInitialized) {
@@ -99,6 +112,7 @@ setInterval(function() {
 
 function additem(itemName,itemPrice) {
 	wishlist.push({"name": itemName,"price": itemPrice});
+    $.cookie('wishlist', wishlist);
 }
 
 function removeitem(itemName){
@@ -109,6 +123,7 @@ function removeitem(itemName){
         }
     });
     wishlist.splice(deleteindex,1);
+    $.cookie('wishlist', wishlist);
 }
 
 function deletionCallback(notID) {
