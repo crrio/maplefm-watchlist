@@ -118,8 +118,8 @@ setInterval(function() {
 }, 60000);
 
 
-function additem(itemName,itemPrice) {
-	wishlist.push({"name": itemName,"price": itemPrice});
+function additem(itemName,itemPrice,icon) {
+	wishlist.push({"name": itemName,"price": itemPrice,'icon': icon});
     $.cookie('wishlist', wishlist);
     show();
 }

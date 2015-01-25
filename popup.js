@@ -9,12 +9,6 @@ var fmservers = ["Scania","Windia","Bera","Broa","Khaini","Ymck","Gazed","Bellon
 
 window.onload = reload;
 
-function addUI(iconIndex, idIndex){
-    for(var i=0; i<wishlist.length; i++){
-      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + iconIndex[idIndex[wishlist[i].name]] +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ wishlist[i].name + "\"></span></div>" );
-    }
-}
-
 function reload(){
 
     $.cookie.json = true;
@@ -34,26 +28,9 @@ function reload(){
   
    var count = 0;
   
-   $.each(wishlist, function(index,result){
-      
-      var id;
-      
-      for( var j=0; j < db.length; j++){
-           if( result.name == db[j].b ){
-              id = db[j].a;
-              idIndex[db[j].b] = id;
-              break; 
-           }
-      }
-      
-      $.getJSON("http://maple.fm/api/items?id="+id, function(data){
-          count = count+1;
-          iconIndex[id] = data.item.icon;
-          if( count==wishlist.length )
-             addUI(iconIndex, idIndex);
-      });
-   
-    });
+   for(var i=0; i<wishlist.length; i++){
+      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + wishlist[i].icon +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ wishlist[i].name + "\"></span></div>" );
+   }
   
     $('.add-item').submit( function(event){
           event.preventDefault();
@@ -102,7 +79,7 @@ function reload(){
               return false; 
           }
       
-          bgpage.additem(newItemName, $('.addprice').val());
+          bgpage.additem(newItemName, $('.addprice').val(), id);
           
           $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id +".png'/><div class=\"name\">"+newItemName+"</div><div class=\"price\">"+$('.addprice').val()+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ newItemName+ "\"></span></div>" );
       
