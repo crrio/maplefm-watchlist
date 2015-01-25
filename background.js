@@ -32,6 +32,11 @@ else
 
 
 function show() {
+  
+    for( var i=0; i< notId; i++ ){
+          chrome.notifications.clear(i.toString(), deletionCallback); 
+    }
+  
     console.log("bg"+$.cookie('server'));
   
     $.getJSON("http://maple.fm/api/2/search?server="+ $.cookie('server') +"&stats=0&desc=0", function(data) {
@@ -106,9 +111,6 @@ setInterval(function() {
         chrome.notifications.getAll( function(notifications){
           
         });
-        for( var i=0; i< notId; i++ ){
-          chrome.notifications.clear(i.toString(), deletionCallback); 
-        }
         show();
         interval = 0;
     }

@@ -189,7 +189,7 @@ function selectMe(obj) {
                 selectMe(this);
             }
         } else {
-            setVal(obj.selectID, obj.selIndex);
+            setVal(obj.selectID, obj.selIndex, obj.textContent);
             obj.className = 'selected';
             obj.parentNode.className = obj.parentNode.className.replace(new RegExp(" selectOpen\\b"), '');
             obj.onclick = function() {
@@ -202,11 +202,19 @@ function selectMe(obj) {
     }
 }
 
-function setVal(objID, selIndex) {
+function setVal(objID, selIndex, name) {
     var obj = document.getElementById(objID);
     obj.selectedIndex = selIndex;
     $.cookie('server', selIndex);
-    bgpage.show();
+    swal({
+               title: "Kaboom!",
+               text: "You are now watching "+name,
+               type: "success",
+               confirmButtonText: "OK",
+            
+    }, function(){
+      bgpage.show();
+    });
 }
 
 function setForm(callback) {
