@@ -117,6 +117,64 @@ input:focus {outline: none; }
   top: 107px;
 }
 
+.settings {
+  position: fixed;
+  width: 100%;
+  height: 400px;
+  overflow-x: hidden;
+  background-color: #f9f9f9;
+  top: 64px;
+  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  z-index: 200;
+}
+
+.setting-label{
+  display: block;
+  position: absolute;
+  top: 23px;
+  left: 25px;
+  font-weight: 300;
+  font-size: 13;
+  font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: 0.5px;  
+}
+
+.server-icon{
+  display: block;
+  position: relative;
+  top: 3px;
+  float: right;
+  margin-right: 8px;
+  width: 14px;
+  height: 14px;
+}
+
+.server-name{
+  display: block;
+  position: relative;
+  margin-right: 3px;
+  top: 0px;
+  float: right;
+  color: white;
+  font-weight: 100;
+  font-size: 13px;
+  font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: 0.5px;  
+  
+}
+
+.server{
+  display: inline-block;
+  position: absolute;
+  right: 19px;
+  top: 19px;
+  background-color: #585858;
+  padding: 4px 6px;
+  border-radius: 5px;
+}
+
 .item {
   position: relative;
   width: 330px;

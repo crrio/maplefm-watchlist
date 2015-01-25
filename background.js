@@ -18,6 +18,10 @@ $.getJSON("http://maple.fm/api/list/items", function(data) {
     console.log(db);
 });
 
+if( $.cookie('server') == undefined ){
+    $.cookie('server', '8'); 
+}
+
 if( $.cookie('wishlist') != undefined ){
     console.log($.cookie('wishlist'));
     wishlist = $.cookie('wishlist');
@@ -29,7 +33,7 @@ else
 
 function show() {
   
-    $.getJSON("http://maple.fm/api/2/search?server=8&stats=0&desc=0", function(data) {
+    $.getJSON("http://maple.fm/api/2/search?server="+ $.cookie('server') + &stats=0&desc=0", function(data) {
   
         console.log(data); // use data as a generic object
         var json = data.fm_items;
