@@ -120,7 +120,10 @@ function reload(){
     );
     $(document).on('click','.octicon-x', function(){
           bgpage.removeitem( $(this).attr('id') );
-          $(this).parent().remove();
+          var par = $(this).parent();
+          par.hide('slow', function(){
+            par.remove(); 
+          });
     });
 }
 
