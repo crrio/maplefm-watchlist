@@ -101,6 +101,16 @@ function additem(itemName,itemPrice) {
 	wishlist.push({"name": itemName,"price": itemPrice});
 }
 
+function removeitem(itemName){
+    var deleteindex;
+    $.each(wishlist, function(index, result){
+        if(result.name == itemName){
+            deleteindex = index;
+        }
+    });
+    wishlist.splice(deleteindex,1);
+}
+
 function deletionCallback(notID) {
 	console.log("Succesfully deleted " + notID + " notification" );
 }

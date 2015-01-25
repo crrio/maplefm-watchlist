@@ -4,9 +4,14 @@ var wishlist = bgpage.wishlist;
 var db = bgpage.db;
 
 var newItemName;
-window.onload = function(){
+window.onload = reload;
+
+function reload(){
+    console.log("success");
     $('.watchlist').empty();
-    
+  
+    wishlist = bgpage.wishlist;
+  
     for(var i=0; i<wishlist.length; i++){
       
       var id;
@@ -23,7 +28,7 @@ window.onload = function(){
            }
         }
       }
-      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\"></span></div>" );
+      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ wishlist[i].name + "\"></span></div>" );
     }
   
     $('.add-item').submit( function(event){
@@ -76,7 +81,7 @@ window.onload = function(){
       
           bgpage.additem(newItemName, $('.addprice').val());
           
-          $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id +".png'/><div class=\"name\">"+newItemName+"</div><div class=\"price\">"+$('.addprice').val()+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\"></span></div>" );
+          $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id +".png'/><div class=\"name\">"+newItemName+"</div><div class=\"price\">"+$('.addprice').val()+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ newItemName+ "\"></span></div>" );
       
           swal({
                title: "Done!",
@@ -93,5 +98,9 @@ window.onload = function(){
           return false;
       }
     );
+    $(document).on('click','.octicon-x', function(){
+          bgpage.removeitem( $(this).attr('id') );
+          $(this).parent().remove();
+    });
 }
 

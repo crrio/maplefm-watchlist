@@ -14,7 +14,7 @@
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
-  "background": { "scripts": ["jquery-1.11.2.min.js", "background.js"] },
+  "background": { "scripts": ["jquery-1.11.2.min.js", "background.js"], "persistent":true },
   "manifest_version": 2,
 
   // crbug.com/134315

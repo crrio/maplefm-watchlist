@@ -202,7 +202,8 @@ input:focus {outline: none; }
 
 .octicon-x{
   position: absolute;
-  right: 20px;
-  top: 28px;
+  right: 10px;
+  top: 18px;
+  padding: 10px;
   opacity: 0.4;
 }
