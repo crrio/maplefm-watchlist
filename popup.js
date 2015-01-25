@@ -16,12 +16,7 @@ function addUI(iconIndex, idIndex){
 }
 
 function reload(){
-  
-    var s = document.getElementsByTagName('select');
-    for (var i = 0; i < s.length; i++) {
-        selectReplacement(s[i]);
-    }
-  
+
     $.cookie.json = true;
   
     console.log("success");
@@ -133,6 +128,11 @@ function reload(){
             par.remove(); 
           });
     });
+  
+    setForm( function(){
+        $('.tempform').remove(); 
+    });
+  
 }
 
 function selectReplacement(obj) {
@@ -142,15 +142,8 @@ function selectReplacement(obj) {
     ul.className = 'selectReplacement';
     ul.className += ' server';
     var opts = obj.options;
-    for (var i = 0; i < opts.length; i++) {
-        var selectedOpt;
-        if (opts[i].selected) {
-            selectedOpt = i;
-            break;
-        } else {
-            selectedOpt = 0;
-        }
-    }
+    var selectedOpt = $.cookie('server');
+
     for (var i = 0; i < opts.length; i++) {
         var li = document.createElement('li');
         var txt = document.createTextNode(opts[i].text);
@@ -212,13 +205,16 @@ function selectMe(obj) {
 function setVal(objID, selIndex) {
     var obj = document.getElementById(objID);
     obj.selectedIndex = selIndex;
+    $.cookie('server', selIndex);
+    bgpage.show();
 }
 
-function setForm() {
+function setForm(callback) {
     var s = document.getElementsByTagName('select');
     for (var i = 0; i < s.length; i++) {
         selectReplacement(s[i]);
     }
+    callback();
 }
 
 function closeSel(obj) {}

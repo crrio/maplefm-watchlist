@@ -32,8 +32,9 @@ else
 
 
 function show() {
+    console.log("bg"+$.cookie('server'));
   
-    $.getJSON("http://maple.fm/api/2/search?server="+ $.cookie('server') + &stats=0&desc=0", function(data) {
+    $.getJSON("http://maple.fm/api/2/search?server="+ $.cookie('server') +"&stats=0&desc=0", function(data) {
   
         console.log(data); // use data as a generic object
         var json = data.fm_items;
