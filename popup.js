@@ -278,9 +278,8 @@ function setForm(callback) {
 function closeSel(obj) {}
 
 function viewResult(item) {
-  $('.owlOfMinerva').css('left', '0px').empty().append("<div class=\"shopitem\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + item.icon + ".png'/><div class=\"name\">" + item.name + "</div><div class=\"price\">" + item.price + " meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\"" + item.name + "\"></span></div>");
-
-  result = $.cookie('result');
+    var imgsite = item.icon == null ? "maple.png" : "http://maple.fm/static/image/icon/" + item.icon + ".png";
+    $(".owlOfMinerva").css("left", "0px").empty().append('<div class="shopitem"><img class="item-icon" src=\'' + imgsite + '\'/><div class="name">' + item.name + '</div><div class="price">' + item.price + ' meso or less</div><div class="closebtn"></div><span class="octicon octicon-x" id="' + item.name + '"></span></div>');
 
   function escape(html) {
     return String(html)

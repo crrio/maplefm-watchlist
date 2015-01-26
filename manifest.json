@@ -21,14 +21,14 @@
   // crbug.com/134315
   "web_accessible_resources": [
     "48.png"
-  ],
+  ]
   
-  "app": {
+  /*"app": {
     "launch": {
       "local_path": "popup.html",
       "container": "panel",
       "height": 560,
       "width": 330
     }
-  }
+  }*/
 }
