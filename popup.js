@@ -112,12 +112,14 @@ function reload(){
           $('.page1').css('left', 0+'px');
           $('.preview').css('left', 331+'px');
           $('.owlOfMinerva').css('left', 331+'px');
+          $('.selectReplacement').css('display','block');
           $(this).css('display','none');
     } );
   
     $('.watchlist').on('click','.item', function(event){
           var str = $(this).find('.name').text();
           console.log(str);
+          $('.selectReplacement').css('display','none');
           $('.backbtn').css('display','block');
           for( var i=0; i < wishlist.length; i++ ){
               if(wishlist[i].name == str){
@@ -144,6 +146,7 @@ function reload(){
           $('.page1').css('left', 0+'px');
           $('.owlOfMinerva').css('left', 331+'px');
           $('.backbtn').css('display','none');
+          $('.selectReplacement').css('display','block');
           return false;
     });
   
@@ -251,7 +254,10 @@ function viewResult(item){
   
     var result = bgpage.resultlist;
     for(var i=0; i<result.length; i++){
-        if( result[i].name == item.name)
+        if( result[i].name == item.name){
+          if(result[i].shopname.length > 25)
+              result[i].shopname = result[i].shopname.substr(0,25) + "...";
           $('.owlOfMinerva').append( "<div class=\"item\"><div class=\"shopname\">"+result[i].shopname+"</div><div class=\"sellprice\">"+result[i].price+" meso - "+result[i].quantity+" piece(s) </div><div class=\"fmroom\">FM"+result[i].fmroom+"</div></div>");
+        }
     }
 }
