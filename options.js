@@ -7,9 +7,10 @@
   field.
 */
 function ghost(isDeactivated) {
-  options.style.color = isDeactivated ? 'graytext' : 'black';
   // The label color.
-  options.frequency.disabled = isDeactivated; // The control manipulability.
+  options.style.color = isDeactivated ? 'graytext' : 'black';
+  // The control manipulability.
+  options.frequency.disabled = isDeactivated;
 }
 
 window.addEventListener('load', function() {

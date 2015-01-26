@@ -106,9 +106,6 @@ function creationCallback(notID) {
   console.log("Succesfully created " + notID + " notification");
 }
 
-
-
-
 /*var script = document.createElement('script');
 script.src = 'jquery-1.11.2.min.js';
 script.type = 'text/javascript';
@@ -131,11 +128,9 @@ var interval = 0; // The display interval, in minutes.
 
 setInterval(function() {
   interval++;
-  //chrome.idle.queryState(15, function (state) {
   if (
     JSON.parse(localStorage.isActivated) &&
     localStorage.frequency <= interval
-    //      state == "active"
   ) {
     chrome.notifications.getAll(function(notifications) {
 
@@ -143,7 +138,6 @@ setInterval(function() {
     show();
     interval = 0;
   }
-  //});
 }, 60000);
 
 function additem(itemName, itemPrice, icon) {
