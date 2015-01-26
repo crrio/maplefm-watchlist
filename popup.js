@@ -216,7 +216,13 @@ function addAutoComplete() {
       messages: {
         noResults: '',
         results: function() {}
+      },
+      select: function(){
+        setTimeout( function(){
+          $('.add-item').submit(); 
+        }, 200);
       }
+      
     });
 }
 
