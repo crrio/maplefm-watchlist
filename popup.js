@@ -3,6 +3,8 @@ var bgpage = chrome.extension.getBackgroundPage();
 var wishlist = bgpage.wishlist;
 var db = bgpage.db;
 
+var result = bgpage.resultlist;
+
 var newItemName;
 
 var fmservers = ["Scania","Windia","Bera","Broa","Khaini","Ymck","Gazed","Bellonova","Renegades"];
@@ -249,10 +251,10 @@ function setForm(callback) {
 function closeSel(obj) {}
 
 function viewResult(item){
-    console.log("yoo");
     $('.owlOfMinerva').css('left','0px').empty().append( "<div class=\"shopitem\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + item.icon +".png'/><div class=\"name\">"+item.name+"</div><div class=\"price\">"+item.price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ item.name + "\"></span></div>");
   
-    var result = bgpage.resultlist;
+    result = $.cookie('result');
+  
     for(var i=0; i<result.length; i++){
         if( result[i].name == item.name){
           if(result[i].shopname.length > 25)

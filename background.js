@@ -61,29 +61,39 @@ function create(){
             //console.log(obj.name + ' ' + obj.price + ' ' + obj.room);
             $.each(wishlist, function(index, result){
                 if(result.name == obj.name && parseInt(result.price) >= parseInt(obj.price) && parseInt(obj.quantity)>=1 ){
-                    
-                    var shopname = obj.shop_name;
-                    if(shopname.length > 25) shopname  = shopname.substring(0,25) + "...";
                 
-                  $.getJSON("http://maple.fm/api/items?id="+obj.id, function(data){
-                  var iconid = data.item.icon;               
-                  var notOption = {
-                        type : "basic",
-                        title: obj.name + " at FM " + obj.room,
-                        message: obj.quantity + " pieces at " +obj.price + "\nShop: " + shopname,
-                        //buttons: { title: 'stop notifying this item'},
-                        //iconUrl: "maple.png",
-                        iconUrl: 'http://maple.fm/static/image/icon/'+ obj.icon+ '.png',
-                    }
-
-                    chrome.notifications.create(notId.toString(), notOption, creationCallback);
-                    notId++;
+                  if(noticenter[obj.name] == undefined || parseInt(noticenter[obj.name].price) > parseInt(result.price)){
+                      noticenter[obj.name] = obj;
+                  }
+                  resultlist.push({"shopname": obj.shop_name,"price": obj.price,"fmroom": obj.room, "quantity": obj.quantity, "name": obj.name});
+                  $.cookie('result', resultlist);
                     
-                    resultlist.push({"shopname": shopname,"price": obj.price,"fmroom": obj.room, "quantity": obj.quantity, "name": obj.name});
-                    });
                 }
             });
         });
+      
+        for( var i=0; i<wishlist.length ; i++ ){
+          
+            obj = noticenter[wishlist[i].name];
+            
+            if(obj == undefined) continue;
+          
+            var shopname = obj.shop_name;
+            if(shopname.length > 25) shopname  = shopname.substring(0,25) + "...";
+          
+          
+            var notOption = {
+                type : "basic",
+                title: obj.name + " at FM " + obj.room,
+                message: obj.quantity + " pieces at " +obj.price + "\nShop: " + shopname,
+                //buttons: { title: 'stop notifying this item'},
+                //iconUrl: "maple.png",
+                iconUrl: 'http://maple.fm/static/image/icon/'+ obj.icon+ '.png',
+            }
+            
+            chrome.notifications.create(notId.toString(), notOption, creationCallback);
+            notId++;           
+        }
     });
 
 }
