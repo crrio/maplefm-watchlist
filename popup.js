@@ -10,13 +10,15 @@ var fmservers = ["Scania","Windia","Bera","Broa","Khaini","Ymck","Gazed","Bellon
 window.onload = reload;
 
 function reload(){
-
     $.cookie.json = true;
   
     console.log("success");
     $('.watchlist').empty();
   
     wishlist = $.cookie('wishlist');
+  
+    db = bgpage.db;  
+  
     console.log(wishlist);
     if( wishlist == undefined )
         wishlist = [];
@@ -68,6 +70,9 @@ function reload(){
               $('.pvicon').attr('src', 'http://maple.fm/static/image/icon/' + id +'.png');
               $('.pvname').text(newItemName);
           });
+      
+          $('.backbtn').css('display','block');
+      
           return false;
       }
     );
@@ -90,6 +95,10 @@ function reload(){
                confirmButtonText: "OK",
             
           }, function(){
+            
+            wishlist = $.cookie('wishlist');
+            
+            $('.backbtn').css('display','none');
             $('.preview').css('left', 331+'px');
             $('.page1').css('left', 0+'px');
             $('.addbox').val("");
@@ -98,12 +107,35 @@ function reload(){
           return false;
       }
     );
-    $(document).on('click','.octicon-x', function(){
+  
+    $('.backbtn').click( function(){
+          $('.page1').css('left', 0+'px');
+          $('.preview').css('left', 331+'px');
+          $('.owlOfMinerva').css('left', 331+'px');
+          $(this).css('display','none');
+    } );
+  
+    $('.watchlist').on('click','.item', function(event){
+          var str = $(this).find('.name').text();
+          console.log(str);
+          $('.backbtn').css('display','block');
+          for( var i=0; i < wishlist.length; i++ ){
+              if(wishlist[i].name == str){
+                  console.log('found!');
+                  viewResult(wishlist[i]);
+                  break; 
+              }
+          }
+    });
+  
+    $('.watchlist').on('click','.octicon-x', function(){
           bgpage.removeitem( $(this).attr('id') );
           var par = $(this).parent();
           par.hide('slow', function(){
             par.remove(); 
+            wishlist = $.cookie('wishlist');
           });
+          return false;
     });
   
     setForm( function(){
@@ -204,3 +236,13 @@ function setForm(callback) {
 
 function closeSel(obj) {}
 
+function viewResult(item){
+    console.log("yoo");
+    $('.owlOfMinerva').css('left','0px').empty().append( "<div class=\"shopitem\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + item.icon +".png'/><div class=\"name\">"+item.name+"</div><div class=\"price\">"+item.price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ item.name + "\"></span></div>");
+  
+    var result = bgpage.resultlist;
+    for(var i=0; i<result.length; i++){
+        if( result[i].name == item.name)
+          $('.owlOfMinerva').append( "<div class=\"item\"><div class=\"shopname\">"+result[i].shopname+"</div><div class=\"sellprice\">"+result[i].price+" meso - "+result[i].quantity+" piece(s) </div><div class=\"fmroom\">FM"+result[i].fmroom+"</div></div>");
+    }
+}

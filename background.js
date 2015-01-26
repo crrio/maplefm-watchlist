@@ -8,6 +8,7 @@ var wishlist = [
                 {"name":"[A] Nebulite (STR %)", "price": "2999999999"},*/
                ];
 
+var resultlist = [];
 
 var db;
   
@@ -30,12 +31,22 @@ if( $.cookie('wishlist') != undefined ){
 else  
     $.cookie('wishlist', wishlist);
 
+var count;
 
 function show() {
   
+    count=0;  
+    resultlist = [];
     for( var i=0; i< notId; i++ ){
-          chrome.notifications.clear(i.toString(), deletionCallback); 
+          chrome.notifications.clear(i.toString(), deletionCallback);
     }
+  
+    if( notId == 0 )
+        create();
+    
+}
+
+function create(){
   
     console.log("bg"+$.cookie('server'));
   
@@ -65,6 +76,8 @@ function show() {
 
                     chrome.notifications.create(notId.toString(), notOption, creationCallback);
                     notId++;
+                    
+                    resultlist.push({"shopname": shopname,"price": obj.price,"fmroom": obj.room, "quantity": obj.quantity, "name": obj.name});
                     });
                 }
             });
@@ -137,5 +150,8 @@ function removeitem(itemName){
 
 function deletionCallback(notID) {
 	console.log("Succesfully deleted " + notID + " notification" );
+    count++;
+    if( count == notId )
+      create();
 }
 

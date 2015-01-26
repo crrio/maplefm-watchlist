@@ -117,26 +117,52 @@ input:focus {outline: none; }
   top: 107px;
 }
 
-.settings {
+.owlOfMinerva {
   position: fixed;
   width: 100%;
-  height: 400px;
+  height: 443px;
   overflow-x: hidden;
   background-color: #f9f9f9;
   top: 64px;
+  left: 332px;
   box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   z-index: 200;
+  -webkit-transition: all .2s;
 }
 
-.setting-label{
+.shopname{
   display: block;
   position: absolute;
-  top: 23px;
+  top: 16px;
   left: 25px;
   font-weight: 300;
   font-size: 13;
+  font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: 0.5px;  
+}
+
+.sellprice {
+  display: block;
+  position: absolute;
+  top: 38px;
+  left: 24px;
+  font-size: 12px;
+  font-weight: 100;
+  font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #8e8e8e;
+  letter-spacing: 0.5px;
+}
+
+.fmroom{
+  display: block;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  color: #2175b2;
+  font-weight: 400;
+  font-size: 24px;
   font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
   letter-spacing: 0.5px;  
 }
@@ -174,9 +200,33 @@ input:focus {outline: none; }
   /*background-color: #3B3B3D;*/
   padding: 4px 6px;
   border-radius: 5px;
-  z-index: 102;
+  z-index: 502;
   width: auto;
 }
+
+.backbtn{
+  position: absolute;
+  left: 19px;
+  top: 23px;
+  font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+  letter-spacing: 0.5;
+  display: none;
+  color: #555;
+}
+
+.shopitem {
+  position: relative;
+  width: 330px;
+  height: 72px;
+  background-color: #ffffff;
+  
+  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+}
+
 
 .item {
   position: relative;
