@@ -270,12 +270,23 @@ function viewResult(item){
     $('.owlOfMinerva').css('left','0px').empty().append( "<div class=\"shopitem\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + item.icon +".png'/><div class=\"name\">"+item.name+"</div><div class=\"price\">"+item.price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ item.name + "\"></span></div>");
   
     result = $.cookie('result');
+    
+    function escape(html) {
+        return String(html)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
   
     for(var i=0; i<result.length; i++){
         if( result[i].name == item.name){
           if(result[i].shopname.length > 25)
               result[i].shopname = result[i].shopname.substr(0,25) + "...";
-          $('.owlOfMinerva').append( "<div class=\"item\"><div class=\"shopname\">"+result[i].shopname+"</div><div class=\"sellprice\">"+result[i].price+" meso - "+result[i].quantity+" piece(s) </div><div class=\"fmroom\">FM"+result[i].fmroom+"</div></div>");
+          $('.owlOfMinerva').append("<div class=\"item\"><div class=\"shopname\">"+escape(result[i].shopname)+"</div><div class=\"sellprice\">"+
+                                    escape(result[i].price)+" meso - "+escape(result[i].quantity)+" piece(s) </div><div class=\"fmroom\">FM"+
+                                    escape(result[i].fmroom)+"</div></div>");
         }
     }
 }
