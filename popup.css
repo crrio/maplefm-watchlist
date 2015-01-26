@@ -73,7 +73,7 @@ input:focus {outline: none; }
   box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  z-index: 200;
+  z-index: 600;
 }
 
 .page1{
@@ -95,6 +95,10 @@ input:focus {outline: none; }
 
 ::-webkit-scrollbar { 
     display: none; 
+}
+
+::-webkit-scrollbar:hover {
+    display: block; 
 }
 
 .watchlist {

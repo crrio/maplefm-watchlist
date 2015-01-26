@@ -138,6 +138,15 @@ function reload(){
           return false;
     });
   
+     $('.owlOfMinerva').on('click','.octicon-x', function(){
+          bgpage.removeitem( $(this).attr('id') );
+          reload();
+          $('.page1').css('left', 0+'px');
+          $('.owlOfMinerva').css('left', 331+'px');
+          $('.backbtn').css('display','none');
+          return false;
+    });
+  
     setForm( function(){
         $('.tempform').remove(); 
     });

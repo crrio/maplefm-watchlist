@@ -14,6 +14,8 @@ var db;
   
 var notId = 0;
 
+var noticenter = {};
+
 $.getJSON("http://maple.fm/api/list/items", function(data) {
     db = data;
     console.log(db);
