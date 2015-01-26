@@ -219,6 +219,15 @@ input:focus {outline: none; }
   display: none;
   color: #555;
   cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 15px;
+  margin-top: -10px;
+  margin-left: -10px;
+}
+
+.backbtn:hover{
+  background-color: rgba(0,0,0,0.3);
+  color: #fff;
 }
 
 .shopitem {
