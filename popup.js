@@ -33,7 +33,8 @@ function reload(){
    var count = 0;
   
    for(var i=0; i<wishlist.length; i++){
-      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + wishlist[i].icon +".png'/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ wishlist[i].name + "\"></span></div>" );
+      var imgsite = wishlist[i].icon == null ? 'maple.png' : 'http://maple.fm/static/image/icon/' + wishlist[i].icon +'.png';
+      $('.watchlist').append( "<div class=\"item\"><img class=\"item-icon\" src=" + imgsite + "/><div class=\"name\">"+wishlist[i].name+"</div><div class=\"price\">"+wishlist[i].price+" meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\""+ wishlist[i].name + "\"></span></div>" );
    }
   
     $('.add-item').submit( function(event){
