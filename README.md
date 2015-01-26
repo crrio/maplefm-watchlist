@@ -7,8 +7,6 @@ Using API provided by Maple.fm
 * Add/Remove items to the watchlist
 * Notification when the items with the preferred price become available
 * Cookie Storage
-
-### Upcoming
 * Server choosing option
 * In-app item viewing
-* Auto complete
+* Auto complete (mostly done)

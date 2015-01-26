@@ -62,7 +62,7 @@ function create(){
             $.each(wishlist, function(index, result){
                 if(result.name == obj.name && parseInt(result.price) >= parseInt(obj.price) && parseInt(obj.quantity)>=1 ){
                 
-                  if(noticenter[obj.name] == undefined || parseInt(noticenter[obj.name].price) > parseInt(result.price)){
+                  if(noticenter[obj.name] == undefined || parseInt(noticenter[obj.name].price) > parseInt(obj.price)){
                       noticenter[obj.name] = obj;
                   }
                   resultlist.push({"shopname": obj.shop_name,"price": obj.price,"fmroom": obj.room, "quantity": obj.quantity, "name": obj.name});
