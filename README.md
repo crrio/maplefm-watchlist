@@ -9,4 +9,4 @@ Using API provided by Maple.fm
 * Cookie Storage
 * Server choosing option
 * In-app item viewing
-* Auto complete (mostly done)
+* Auto complete
