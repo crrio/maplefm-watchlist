@@ -387,3 +387,7 @@ ul.selectOpen li.selected:hover{
 select.replaced {
   display: none;
 }
+.ui-autocomplete {
+    background: #4a4a4a;
+    border-radius: 0px;
+}

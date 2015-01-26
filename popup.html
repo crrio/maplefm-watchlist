@@ -20,10 +20,11 @@
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
-    <script src="popup.js"></script>
     <script src="jquery-1.11.2.min.js"></script>
     <script src="bower_components/jquery-cookie/jquery.cookie.js"></script>
     <script src="bower_components/sweetalert/lib/sweet-alert.min.js"></script> 
+    <script src="bower_components/jqueryui/jquery-ui.min.js"></script>
+    <script src="popup.js"></script>
     <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/lib/sweet-alert.css">
     <link href="popup.css" type="text/css" rel="stylesheet">
     <link href="octicons/octicons.css" type="text/css" rel="stylesheet">
@@ -48,7 +49,7 @@
           
       <div class="searchbar">
         <form class="add-item">
-            <input class="addbox page1" type="text" placeholder="Type to add new item">
+            <input class="addbox page1" type="text" id="additembox" placeholder="Type to add new item">
         </form>
         <form class="add-price">
             <input class="addprice preview" type="text" placeholder="How much are you willing to pay">

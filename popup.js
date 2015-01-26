@@ -201,6 +201,22 @@ function selectReplacement(obj) {
         ul.appendChild(li);
     }
     obj.parentNode.appendChild(ul);
+    
+    addAutoComplete();
+}
+
+function addAutoComplete() {
+    var items = db.map(function (x) { return x.b });
+    $( "#additembox" ).autocomplete({
+      source: function(request, response) {
+        var results = $.ui.autocomplete.filter(items, request.term);
+        response(results.slice(0, 10));
+      },
+      messages: {
+        noResults: '',
+        results: function() {}
+      }
+    });
 }
 
 function selectMe(obj) {
