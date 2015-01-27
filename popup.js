@@ -138,7 +138,7 @@ function reload() {
     $('.selectReplacement').css('display', 'none');
     $('.backbtn').css('display', 'block');
     for (var i = 0; i < wishlist.length; i++) {
-      if (wishlist[i].name.search(str) == 0) {
+      if (wishlist[i].name.indexOf(str) == 0) {
         console.log('found!');
         viewResult(wishlist[i]);
         break;
@@ -327,7 +327,9 @@ function viewResult(item) {
       .replace(/>/g, '&gt;');
   }
 
-  result = $.cookie("result").sort(function(a,b){ return parseInt(a.price) - parseInt(b.price) });
+  result = $.cookie("result").sort(function(a, b) {
+    return parseInt(a.price) - parseInt(b.price)
+  });
 
   for (var i = 0; i < result.length; i++) {
     if (result[i].name == item.name) {
