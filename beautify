@@ -1,0 +1,1 @@
+./node_modules/js-beautify/js/bin/js-beautify.js -r -s 2 $1

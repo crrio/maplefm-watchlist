@@ -82,16 +82,16 @@ function reload() {
 
     return false;
   });
-  $(".addprice").keyup(function(){
-          if(event.which >= 37 && event.which <= 40){
-                event.preventDefault();
-              }
-              var $this = $(this);
-              var num = $this.val().replace(/,/g, '');
-              $this.val(num.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
-       
-          
-          });
+  $(".addprice").keyup(function() {
+    if (event.which >= 37 && event.which <= 40) {
+      event.preventDefault();
+    }
+    var $this = $(this);
+    var num = $this.val().replace(/,/g, '');
+    $this.val(num.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+
+
+  });
 
   $('.add-price').submit(function(event) {
     event.preventDefault();
@@ -133,12 +133,12 @@ function reload() {
   });
 
   $('.watchlist').on('click', '.item', function(event) {
-    var str = $(this).find('.name').text().replace('...','');
+    var str = $(this).find('.name').text().replace('...', '');
     console.log(str);
     $('.selectReplacement').css('display', 'none');
     $('.backbtn').css('display', 'block');
     for (var i = 0; i < wishlist.length; i++) {
-      if (wishlist[i].name.search(str)==0) {
+      if (wishlist[i].name.search(str) == 0) {
         console.log('found!');
         viewResult(wishlist[i]);
         break;
@@ -158,30 +158,30 @@ function reload() {
 
   $('.owlOfMinerva').on('click', '.octicon-x', function() {
     var itemid = $(this).attr("id");
-            return bgpage.removeitem(itemid), $(".watchlist .octicon-x").each( function(index){
-                if($(this).attr("id")==itemid){
-                     $(this).parent().remove(); 
-                     wishlist = $.cookie("wishlist");
-                 }
-               }), $(".page1").css("left", "0px"), $(".owlOfMinerva").css("left", "331px"), $(".backbtn").css("display", "none"), $(".selectReplacement").css("display", "block"), !1;
+    return bgpage.removeitem(itemid), $(".watchlist .octicon-x").each(function(index) {
+      if ($(this).attr("id") == itemid) {
+        $(this).parent().remove();
+        wishlist = $.cookie("wishlist");
+      }
+    }), $(".page1").css("left", "0px"), $(".owlOfMinerva").css("left", "331px"), $(".backbtn").css("display", "none"), $(".selectReplacement").css("display", "block"), !1;
   });
 
   setForm(function() {
     $('.tempform').remove();
   });
 
-   $("body").click(function() {
-           console.log("CLICK");
-           $(".selectOpen").removeClass("selectOpen");
-          document.getElementsByClassName("selected")[0].onclick = function() {
-                  console.log("clickagain");
-                  event.stopPropagation();
-                  this.parentNode.className += " selectOpen", this.onclick = function() {
-                         event.stopPropagation();
-                         selectMe(this);
-                     };
-               }
-             });
+  $("body").click(function() {
+    console.log("CLICK");
+    $(".selectOpen").removeClass("selectOpen");
+    document.getElementsByClassName("selected")[0].onclick = function() {
+      console.log("clickagain");
+      event.stopPropagation();
+      this.parentNode.className += " selectOpen", this.onclick = function() {
+        event.stopPropagation();
+        selectMe(this);
+      };
+    }
+  });
 
 }
 
@@ -307,16 +307,16 @@ function setForm(callback) {
 
 function closeSel(obj) {}
 
-function shorten(str){
-    if( str.length > 24 ){
-        return str.substr(0,24) + "...";
-    }
-    return str;
+function shorten(str) {
+  if (str.length > 24) {
+    return str.substr(0, 24) + "...";
+  }
+  return str;
 }
 
 function viewResult(item) {
-    var imgsite = item.icon == null ? "maple.png" : "http://maple.fm/static/image/icon/" + item.icon + ".png";
-    $(".owlOfMinerva").css("left", "0px").empty().append('<div class="shopitem"><img class="item-icon" src=\'' + imgsite + '\'/><div class="helper"></div><div class="name">' + shorten(item.name) + '</div><div class="price">' + item.price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ' meso or less</div><span class="octicon octicon-x" id="' + item.name + '"></span></div>');
+  var imgsite = item.icon == null ? "maple.png" : "http://maple.fm/static/image/icon/" + item.icon + ".png";
+  $(".owlOfMinerva").css("left", "0px").empty().append('<div class="shopitem"><img class="item-icon" src=\'' + imgsite + '\'/><div class="helper"></div><div class="name">' + shorten(item.name) + '</div><div class="price">' + item.price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ' meso or less</div><span class="octicon octicon-x" id="' + item.name + '"></span></div>');
 
   function escape(html) {
     return String(html)
@@ -326,6 +326,8 @@ function viewResult(item) {
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
   }
+
+  result = $.cookie("result").sort(function(a,b){ return parseInt(a.price) - parseInt(b.price) });
 
   for (var i = 0; i < result.length; i++) {
     if (result[i].name == item.name) {
