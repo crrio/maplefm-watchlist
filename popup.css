@@ -61,7 +61,7 @@ input:focus {outline: none; }
   box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  z-index: 100;
+  z-index: 501;
 }
 
 
@@ -268,12 +268,12 @@ input:focus {outline: none; }
 
 .pvicon {
   left: 145px;
-  top: 130px;
+  top: 140px;
 }
 
 .pvname {
   position: relative;
-  top: 145px;
+  top: 155px;
   display: block;
   width: 100%;
   text-align: center;
