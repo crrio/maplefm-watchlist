@@ -37,6 +37,8 @@ function show() {
 
   count = 0;
   resultlist = [];
+  noticenter = {};
+
   for (var i = 0; i < notId; i++) {
     chrome.notifications.clear(i.toString(), deletionCallback);
   }
@@ -123,6 +125,8 @@ if (!localStorage.isInitialized) {
 if (JSON.parse(localStorage.isActivated)) {
   show();
 }
+
+$.cookie.defaults = {expires: 365};
 
 var interval = 0; // The display interval, in minutes.
 

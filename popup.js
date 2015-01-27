@@ -34,7 +34,7 @@ function reload() {
 
   for (var i = 0; i < wishlist.length; i++) {
     var imgsite = wishlist[i].icon == null ? 'maple.png' : 'http://maple.fm/static/image/icon/' + wishlist[i].icon + '.png';
-    $('.watchlist').append("<div class=\"item\"><img class=\"item-icon\" src=" + imgsite + "/><div class=\"name\">" + wishlist[i].name + "</div><div class=\"price\">" + wishlist[i].price + " meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\"" + wishlist[i].name + "\"></span></div>");
+    $('.watchlist').append("<div class=\"item\"><img class=\"item-icon\" src=" + imgsite + "/><div class=\"helper\"></div><div class=\"name\">" + shorten(wishlist[i].name) + "</div><div class=\"price\">" + wishlist[i].price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " meso or less</div><span class=\"octicon octicon-x\" id=\"" + wishlist[i].name + "\"></span></div>");
   }
 
   $('.add-item').submit(function(event) {
@@ -82,6 +82,16 @@ function reload() {
 
     return false;
   });
+  $(".addprice").keyup(function(){
+          if(event.which >= 37 && event.which <= 40){
+                event.preventDefault();
+              }
+              var $this = $(this);
+              var num = $this.val().replace(/,/g, '');
+              $this.val(num.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+       
+          
+          });
 
   $('.add-price').submit(function(event) {
     event.preventDefault();
@@ -89,10 +99,11 @@ function reload() {
     if ($('.addprice').val().length == 0) {
       return false;
     }
+    $(".addprice").val($(".addprice").val().replace(/,/g, ''));
 
     bgpage.additem(newItemName, $('.addprice').val(), id);
 
-    $('.watchlist').append("<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id + ".png'/><div class=\"name\">" + newItemName + "</div><div class=\"price\">" + $('.addprice').val() + " meso or less</div><div class=\"closebtn\"></div><span class=\"octicon octicon-x\" id=\"" + newItemName + "\"></span></div>");
+    $('.watchlist').append("<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id + ".png'/><div class=\"helper\"></div><div class=\"name\">" + shorten(newItemName) + "</div><div class=\"price\">" + $('.addprice').val() + " meso or less</div><span class=\"octicon octicon-x\" id=\"" + newItemName + "\"></span></div>");
 
     swal({
       title: "Done!",
@@ -122,12 +133,12 @@ function reload() {
   });
 
   $('.watchlist').on('click', '.item', function(event) {
-    var str = $(this).find('.name').text();
+    var str = $(this).find('.name').text().replace('...','');
     console.log(str);
     $('.selectReplacement').css('display', 'none');
     $('.backbtn').css('display', 'block');
     for (var i = 0; i < wishlist.length; i++) {
-      if (wishlist[i].name == str) {
+      if (wishlist[i].name.search(str)==0) {
         console.log('found!');
         viewResult(wishlist[i]);
         break;
@@ -138,7 +149,7 @@ function reload() {
   $('.watchlist').on('click', '.octicon-x', function() {
     bgpage.removeitem($(this).attr('id'));
     var par = $(this).parent();
-    par.hide('slow', function() {
+    par.hide('fast', function() {
       par.remove();
       wishlist = $.cookie('wishlist');
     });
@@ -146,18 +157,31 @@ function reload() {
   });
 
   $('.owlOfMinerva').on('click', '.octicon-x', function() {
-    bgpage.removeitem($(this).attr('id'));
-    reload();
-    $('.page1').css('left', 0 + 'px');
-    $('.owlOfMinerva').css('left', 331 + 'px');
-    $('.backbtn').css('display', 'none');
-    $('.selectReplacement').css('display', 'block');
-    return false;
+    var itemid = $(this).attr("id");
+            return bgpage.removeitem(itemid), $(".watchlist .octicon-x").each( function(index){
+                if($(this).attr("id")==itemid){
+                     $(this).parent().remove(); 
+                     wishlist = $.cookie("wishlist");
+                 }
+               }), $(".page1").css("left", "0px"), $(".owlOfMinerva").css("left", "331px"), $(".backbtn").css("display", "none"), $(".selectReplacement").css("display", "block"), !1;
   });
 
   setForm(function() {
     $('.tempform').remove();
   });
+
+   $("body").click(function() {
+           console.log("CLICK");
+           $(".selectOpen").removeClass("selectOpen");
+          document.getElementsByClassName("selected")[0].onclick = function() {
+                  console.log("clickagain");
+                  event.stopPropagation();
+                  this.parentNode.className += " selectOpen", this.onclick = function() {
+                         event.stopPropagation();
+                         selectMe(this);
+                     };
+               }
+             });
 
 }
 
@@ -181,14 +205,17 @@ function selectReplacement(obj) {
     li.appendChild(txt);
     li.selIndex = opts[i].index;
     li.selectID = obj.id;
-    li.onclick = function() {
+    li.onclick = function(event) {
+      event.stopPropagation();
       selectMe(this);
     }
     if (i == selectedOpt) {
       li.className = 'selected';
       li.onclick = function() {
+        event.stopPropagation(event);
         this.parentNode.className += ' selectOpen';
-        this.onclick = function() {
+        this.onclick = function(event) {
+          event.stopPropagation();
           selectMe(this);
         }
       }
@@ -235,16 +262,19 @@ function selectMe(obj) {
   for (var i = 0; i < lis.length; i++) {
     if (lis[i] != obj) {
       lis[i].className = '';
-      lis[i].onclick = function() {
+      lis[i].onclick = function(event) {
+        event.stopPropagation();
         selectMe(this);
       }
     } else {
       setVal(obj.selectID, obj.selIndex, obj.textContent);
       obj.className = 'selected';
       obj.parentNode.className = obj.parentNode.className.replace(new RegExp(" selectOpen\\b"), '');
-      obj.onclick = function() {
+      obj.onclick = function(event) {
+        event.stopPropagation();
         obj.parentNode.className += ' selectOpen';
-        this.onclick = function() {
+        this.onclick = function(event) {
+          event.stopPropagation();
           selectMe(this);
         }
       }
@@ -277,9 +307,16 @@ function setForm(callback) {
 
 function closeSel(obj) {}
 
+function shorten(str){
+    if( str.length > 24 ){
+        return str.substr(0,24) + "...";
+    }
+    return str;
+}
+
 function viewResult(item) {
     var imgsite = item.icon == null ? "maple.png" : "http://maple.fm/static/image/icon/" + item.icon + ".png";
-    $(".owlOfMinerva").css("left", "0px").empty().append('<div class="shopitem"><img class="item-icon" src=\'' + imgsite + '\'/><div class="name">' + item.name + '</div><div class="price">' + item.price + ' meso or less</div><div class="closebtn"></div><span class="octicon octicon-x" id="' + item.name + '"></span></div>');
+    $(".owlOfMinerva").css("left", "0px").empty().append('<div class="shopitem"><img class="item-icon" src=\'' + imgsite + '\'/><div class="helper"></div><div class="name">' + shorten(item.name) + '</div><div class="price">' + item.price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ' meso or less</div><span class="octicon octicon-x" id="' + item.name + '"></span></div>');
 
   function escape(html) {
     return String(html)

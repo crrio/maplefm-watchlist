@@ -142,7 +142,7 @@ input:focus {outline: none; }
   top: 16px;
   left: 25px;
   font-weight: 300;
-  font-size: 13;
+  font-size: 14px;
   font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
   letter-spacing: 0.5px;
 }
@@ -176,7 +176,7 @@ input:focus {outline: none; }
   position: relative;
   float: left;
   top: 5px;
-  margin-right: 5px;
+  margin-right: 3px;
   width: 15px;
   height: 15px;
 }
@@ -219,15 +219,15 @@ input:focus {outline: none; }
   display: none;
   color: #555;
   cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 15px;
-  margin-top: -10px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  margin-top: -3px;
   margin-left: -10px;
 }
 
 .backbtn:hover{
-  background-color: rgba(0,0,0,0.3);
-  color: #fff;
+  background-color: rgba(0,0,0,0.04);
+  color: #000000;
 }
 
 .shopitem {
@@ -259,12 +259,11 @@ input:focus {outline: none; }
 }
 
 .item-icon {
-  display: block;
+  display: inline-block;
   position: relative;
-  top: 17px;
   left: 21px;
   width: 35px;
-  height: 35px;
+  vertical-align: middle;
 }
 
 .pvicon {
@@ -356,12 +355,12 @@ ul.selectReplacement li {
   color: #fff;
   cursor: pointer;
   display: none;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 25px;
   list-style: none;
   margin: 0;
   padding: 1px 10px 1px 5px;
-  width: 80px;
+  width: 90px;
 }
 ul.selectOpen li {
   display: block;
@@ -383,7 +382,7 @@ ul.selectOpen li.selected {
   color: #fff;
   background: #242424;
   border: 0px;
-  width: 80px;
+  width: 90px;
   display: block;
   border-radius: 0px;
 }
@@ -452,6 +451,12 @@ select.replaced {
 
 .ui-helper-hidden-accessible{
   display: none;
+}
+
+.helper{
+  vertical-align: middle;
+  height: 100%;
+  display: inline-block;
 }
 
 .pulse:before {
