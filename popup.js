@@ -103,7 +103,7 @@ function reload() {
 
     bgpage.additem(newItemName, $('.addprice').val(), id);
 
-    $('.watchlist').append("<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id + ".png'/><div class=\"helper\"></div><div class=\"name\">" + shorten(newItemName) + "</div><div class=\"price\">" + $('.addprice').val() + " meso or less</div><span class=\"octicon octicon-x\" id=\"" + newItemName + "\"></span></div>");
+    $('.watchlist').append("<div class=\"item\"><img class=\"item-icon\" src='http://maple.fm/static/image/icon/" + id + ".png'/><div class=\"helper\"></div><div class=\"name\">" + shorten(newItemName) + "</div><div class=\"price\">" + $('.addprice').val().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " meso or less</div><span class=\"octicon octicon-x\" id=\"" + newItemName + "\"></span></div>");
 
     swal({
       title: "Done!",
@@ -328,7 +328,7 @@ function viewResult(item) {
   }
 
   result = $.cookie("result").sort(function(a, b) {
-    return parseInt(a.price) - parseInt(b.price)
+    return parseInt(a.price) - parseInt(b.price);
   });
 
   for (var i = 0; i < result.length; i++) {

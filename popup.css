@@ -129,9 +129,11 @@ input:focus {outline: none; }
   background-color: #f9f9f9;
   top: 64px;
   left: 332px;
+  /*
   box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
   -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  */
   z-index: 200;
   -webkit-transition: all .2s;
 }
