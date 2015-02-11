@@ -316,7 +316,7 @@ input:focus {outline: none; }
 
 .disclaimer{
   position: fixed;
-  bottom: 18px;
+  bottom: 17px;
   display: block;
   width: 100%;
   text-align: center;
@@ -325,6 +325,17 @@ input:focus {outline: none; }
   font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   color: rgba(0,0,0,0.4);
+}
+
+.option{
+  position: fixed;
+  top: 22px;
+  z-index: 1200;
+  left: 22px;
+  font-size: 22px;
+  text-align: center;
+  opacity: 0.2;
+  -webkit-appearance: none;
 }
 
 .octicon-x{
