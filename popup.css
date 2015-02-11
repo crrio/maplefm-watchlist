@@ -119,6 +119,7 @@ input:focus {outline: none; }
   background-color: #fff;
   overflow-x: hidden;
   top: 107px;
+  z-index: 500;
 }
 
 .owlOfMinerva {
@@ -325,6 +326,7 @@ input:focus {outline: none; }
   font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   color: rgba(0,0,0,0.4);
+  z-index: 502;
 }
 
 .option{
@@ -336,6 +338,12 @@ input:focus {outline: none; }
   text-align: center;
   opacity: 0.2;
   -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.octicon-gear:hover{
+  opacity: 0.8;
+  color: #40a3e0;
 }
 
 .octicon-x{

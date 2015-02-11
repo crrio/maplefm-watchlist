@@ -8,7 +8,7 @@ var wishlist = [
   {"name":"[A] Nebulite (STR %)", "price": "2999999999"},*/
 ];
 
-var resultlist = [];
+var resultlist = [], oldone = [];
 
 var db;
 
@@ -21,8 +21,12 @@ $.getJSON("http://maple.fm/api/list/items", function(data) {
   console.log(db);
 });
 
+if ($.cookie('option') == undefined) {
+  $.cookie('option', 'newonly'); 
+}
+
 if ($.cookie('server') == undefined) {
-  $.cookie('server', '8');
+  $.cookie('server', '0');
 }
 
 if ($.cookie('wishlist') != undefined) {
@@ -30,6 +34,8 @@ if ($.cookie('wishlist') != undefined) {
   wishlist = $.cookie('wishlist');
 } else
   $.cookie('wishlist', wishlist);
+
+$.cookie('result', [] );
 
 var count;
 
@@ -54,11 +60,13 @@ function create() {
 
   $.getJSON("http://maple.fm/api/2/search?server=" + $.cookie('server') + "&stats=0&desc=0", function(data) {
 
+    oldone = $.cookie('result');
+    resultlist = [];
+    
     console.log(data); // use data as a generic object
     var json = data.fm_items;
     notId = 0;
     $.each(json, function(ind, obj) {
-      //console.log(obj.name + ' ' + obj.price + ' ' + obj.room);
       $.each(wishlist, function(index, result) {
         if (result.name == obj.name && parseInt(result.price) >= parseInt(obj.price) && parseInt(obj.quantity) >= 1) {
 
@@ -74,31 +82,65 @@ function create() {
           });
           $.cookie('result', resultlist);
 
+          if( $.cookie('option') == 'newonly' ){
+              var found = false;
+              console.log('this is ' + obj.name + obj.shop_name + obj.price + obj.room);
+              for(var i=0; i< oldone.length; i++){
+                  var o = oldone[i];
+                  console.log(o.name + o.shopname + o.price + o.fmroom);
+                  
+                  if( o.price == obj.price && o.shopname == obj.shop_name && o.name == obj.name && o.fmroom == obj.room)
+                   {
+                      console.log("FOUND!");
+                      found = true;
+                   }
+              }
+              
+              if( !found ){
+                var shopname = obj.shop_name;
+                if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
+
+
+                var notOption = {
+                  type: "basic",
+                  title: obj.name + " at FM " + obj.room,
+                  message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                  iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+                }
+
+                chrome.notifications.create(notId.toString(), notOption, creationCallback);
+                notId++;
+            }
+          }
+          
         }
       });
     });
 
-    for (var i = 0; i < wishlist.length; i++) {
+    
+    if ( $.cookie('option') == 'lowest' ){
+    
+        for (var i = 0; i < wishlist.length; i++) {
 
-      obj = noticenter[wishlist[i].name];
+          obj = noticenter[wishlist[i].name];
 
-      if (obj == undefined) continue;
+          if (obj == undefined) continue;
 
-      var shopname = obj.shop_name;
-      if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
+          var shopname = obj.shop_name;
+          if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
 
 
-      var notOption = {
-        type: "basic",
-        title: obj.name + " at FM " + obj.room,
-        message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-        //buttons: { title: 'stop notifying this item'},
-        //iconUrl: "maple.png",
-        iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-      }
+          var notOption = {
+            type: "basic",
+            title: obj.name + " at FM " + obj.room,
+            message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+            iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+          }
 
-      chrome.notifications.create(notId.toString(), notOption, creationCallback);
-      notId++;
+          chrome.notifications.create(notId.toString(), notOption, creationCallback);
+          notId++;
+        }
+      
     }
   });
 
