@@ -14,6 +14,11 @@ window.onload = reload;
 function reload() {
   $.cookie.json = true;
 
+  if( $.cookie('option') == 'newonly' )
+      $('.currentopt').text('  NEW');
+    else
+      $('.currentopt').text('  LOWEST');
+  
   console.log("success");
   $('.watchlist').empty();
 
@@ -79,7 +84,7 @@ function reload() {
     });
 
     $('.backbtn').css('display', 'block');
-
+    $('.octicon-gear').css('display','none');
     return false;
   });
   $(".addprice").keyup(function() {
@@ -116,6 +121,7 @@ function reload() {
       wishlist = $.cookie('wishlist');
 
       $('.backbtn').css('display', 'none');
+      $('.octicon-gear').css('display','block');
       $('.preview').css('left', 331 + 'px');
       $('.page1').css('left', 0 + 'px');
       $('.addbox').val("");
@@ -130,6 +136,7 @@ function reload() {
     $('.owlOfMinerva').css('left', 331 + 'px');
     $('.selectReplacement').css('display', 'block');
     $(this).css('display', 'none');
+    $('.octicon-gear').css('display','block');
   });
 
   $('.watchlist').on('click', '.item', function(event) {
@@ -137,6 +144,7 @@ function reload() {
     console.log(str);
     $('.selectReplacement').css('display', 'none');
     $('.backbtn').css('display', 'block');
+    $('.octicon-gear').css('display','none');
     for (var i = 0; i < wishlist.length; i++) {
       if (wishlist[i].name.indexOf(str) == 0) {
         console.log('found!');
@@ -155,7 +163,22 @@ function reload() {
     });
     return false;
   });
+  
+  $('.selectoption').on('click', '.suboption', function() {
+    $.cookie('option', $(this).attr('id'));
+    if( $.cookie('option') == 'newonly' )
+      $('.currentopt').text('  NEW');
+    else
+      $('.currentopt').text('  LOWEST');
+  });
 
+  $('.header').on('click','.octicon-gear', function(){
+    console.log("YEA");
+    event.stopPropagation();
+    $('.selectoption').css('display','block');
+    $('.octicon-gear').addClass('active');
+  });
+  
   $('.owlOfMinerva').on('click', '.octicon-x', function() {
     var itemid = $(this).attr("id");
     return bgpage.removeitem(itemid), $(".watchlist .octicon-x").each(function(index) {
@@ -163,7 +186,7 @@ function reload() {
         $(this).parent().remove();
         wishlist = $.cookie("wishlist");
       }
-    }), $(".page1").css("left", "0px"), $(".owlOfMinerva").css("left", "331px"), $(".backbtn").css("display", "none"), $(".selectReplacement").css("display", "block"), !1;
+    }), $(".page1").css("left", "0px"), $(".owlOfMinerva").css("left", "331px"), $(".backbtn").css("display", "none"), $(".selectReplacement").css("display", "block"), $('.octicon-gear').css('display','block'); !1;
   });
 
   setForm(function() {
@@ -171,6 +194,8 @@ function reload() {
   });
 
   $("body").click(function() {
+    $('.selectoption').css('display','none');
+    $('.octicon-gear').removeClass('active');
     console.log("CLICK");
     $(".selectOpen").removeClass("selectOpen");
     document.getElementsByClassName("selected")[0].onclick = function() {

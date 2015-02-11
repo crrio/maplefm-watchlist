@@ -3,7 +3,7 @@ html {
   border: 0;
   padding: 0;
 
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -213,7 +213,7 @@ input:focus {outline: none; }
 
 .backbtn{
   position: absolute;
-  left: 19px;
+  left: 21px;
   top: 23px;
   font-family: "Roboto","Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 100;
@@ -346,6 +346,11 @@ input:focus {outline: none; }
   color: #40a3e0;
 }
 
+.active{
+  opacity: 0.8;
+  color: #40a3e0;
+}
+
 .octicon-x{
   position: absolute;
   right: 15px;
@@ -362,6 +367,14 @@ input:focus {outline: none; }
   cursor: pointer;
 }
 
+.currentopt{
+  font-size: 10px;
+  font-weight: 400;
+  margin-left: 3px;
+  vertical-align: middle;
+  font-family: 'Roboto';
+}
+
 /* selection dropdown */
 
 ul.selectReplacement {
@@ -371,7 +384,8 @@ ul.selectReplacement {
   height: 1.65em;
   width: 100px;
 }
-ul.selectReplacement li {
+
+ul.selectReplacement li, .suboption {
   background: #4e4e4e;
   color: #fff;
   cursor: pointer;
@@ -383,6 +397,48 @@ ul.selectReplacement li {
   padding: 1px 10px 1px 5px;
   width: 90px;
 }
+
+.selectoption{
+  position: absolute;
+  left: -17px;
+  top: 40px;
+  display: none;
+} 
+
+.suboption {
+  display: block;
+  width: 89px;
+  opacity: 0.9;
+  background: #40a3e0;
+}
+
+.arrow_box {
+	position: relative;
+    background: #40a3e0;
+    opacity:0.9;
+}
+.arrow_box:after {
+	left: 32%;
+	bottom: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-bottom-color: #40a3e0;
+	border-width: 4px;
+	margin-left: -30px;
+    opacity: 0.9;
+}
+
+.suboption:hover {
+  background: #65bff7;
+  color: #fff;
+  cursor: pointer;
+}
+
 ul.selectOpen li {
   display: block;
 }
@@ -409,7 +465,8 @@ ul.selectOpen li.selected {
 }
 
 ul.selectOpen li:hover,
-ul.selectOpen li.selected:hover{
+ul.selectOpen li.selected:hover
+{
   background: #242424;
   color: #fff;
   cursor: pointer;
