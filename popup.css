@@ -252,9 +252,9 @@ input:focus {outline: none; }
   background-color: #ffffff;
   cursor: pointer;
 
-  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
-  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.16);
+  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.16);
 }
 
 .item:hover{
