@@ -8,8 +8,17 @@
     "notifications",
     "*://maple.fm/*",
     "storage",
-    "cookies"
+    "cookies",
+    "activeTab"
   ],
+  "content_scripts": [
+        {
+            "matches": ["http://forum2.nexon.net/*"],
+            "all_frames": true,
+            "js": ["jquery-1.11.2.min.js", "subcontent.js"]
+        }
+  ]
+  ,
   "browser_action": {
     "default_icon": "maple.png",
     "default_popup": "popup.html"
@@ -22,13 +31,4 @@
   "web_accessible_resources": [
     "48.png"
   ]
-  
-  /*"app": {
-    "launch": {
-      "local_path": "popup.html",
-      "container": "panel",
-      "height": 560,
-      "width": 330
-    }
-  }*/
 }
