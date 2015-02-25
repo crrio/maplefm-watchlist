@@ -81,7 +81,7 @@ $(document).ready(function(){
                     $.getJSON("http://maple.fm/api/items?id=" + id, function(data) {
                       iconid = data.item.icon;
                       msg = "[url=http://maple.fm/db/items/" + id + 
-                          "[img]http://maple.fm/static/icon/"+ iconid + 
+                          "][img]http://maple.fm/static/icon/"+ iconid + 
                           ".png[/img]" + newItemName + "[/url]";
                       var original = $('#cke_contents_vB_Editor_QR_editor textarea').val();
                       $('#cke_contents_vB_Editor_QR_editor textarea').val( original + msg);
@@ -126,7 +126,7 @@ $(document).ready(function(){
                 iconid = data.item.icon;
                 $('.inject-btn').removeClass('showForm');
                 var msg = "[url=http://maple.fm/db/items/" + id + 
-                    "[img]http://maple.fm/static/icon/"+ iconid + 
+                    "][img]http://maple.fm/static/icon/"+ iconid + 
                     ".png[/img]" + newItemName + "[/url]";
                 var original = $('#cke_contents_vB_Editor_QR_editor textarea').val();
                 $('#cke_contents_vB_Editor_QR_editor textarea').val( original + msg);
