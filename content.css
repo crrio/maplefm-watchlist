@@ -1,0 +1,98 @@
+input:focus {outline: none; }
+
+.inject-btn {
+  position: fixed;
+  right: 30px;
+  background-color: white;
+  border: 1px solid rgba(0,0,0,0.05); border-radius: 5px; padding: 5px 6px 5px 5px;
+  -webkit-transition: all .2s;
+  overflow: hidden;
+}
+
+.inject-btn:hover{
+  cursor: pointer;
+}
+
+#inject-form{
+  margin-bottom: 30px;
+  padding-left: 15px;
+  width: 172px;
+  margin-top: 4px;
+  border: 0px;
+  background-color: #f2f2f2;
+ 
+  position: relative;
+  top: -27px;
+  left: 32px;
+  border-radius: 0;
+  padding: 4px;
+}
+
+.formwrap{
+  position: absolute; 
+}
+
+.showForm {
+  left: 700px; 
+}
+
+.ui-autocomplete {
+  margin-top: 30px;
+  background: #fff;
+  border-radius: 5px;
+  padding: 0;
+  border: solid 1px #ddd;
+  font-size: 13px;
+  color: #aaa;
+  width: 170px !important;
+  position: absolute !important;
+  /* top: 110px !important; */
+  right: 90px !important;
+}
+
+.ui-autocomplete::before{
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #ddd;
+  position: absolute;
+  top: -10px;
+  left: 75px;
+}
+
+.ui-autocomplete::after{
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  position: absolute;
+  top: -8px;
+  left: 75px;
+}
+
+.ui-menu-item {
+  list-style: none;
+  padding: 7px 15px;
+  cursor: pointer;
+}
+.ui-menu-item:hover {
+  background: #f3f3f3;
+}
+
+.ui-menu-item:hover{
+  color: #000;
+}
+
+.ui-helper-hidden-accessible{
+  display: none;
+}
+
+.helper{
+  vertical-align: middle;
+  height: 100%;
+  display: inline-block;
+}
