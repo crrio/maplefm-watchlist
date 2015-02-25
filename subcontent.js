@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+  var db;
   var f = function(){
       
         var target = document.getElementById("vB_Editor_QR");
@@ -38,6 +39,8 @@ $(document).ready(function(){
           
           $.getJSON("http://maple.fm/api/list/items", function(data) {
             
+            db = data;
+            
             var items = data.map(function(x) {
               return x.b
             });
@@ -53,7 +56,38 @@ $(document).ready(function(){
               },
               select: function() {
                 setTimeout(function() {
+                    $("#inject-form").autocomplete("close");
 
+                    id = -1;
+                    newItemName = $('#inject-form').val();
+                    if (newItemName.length == 0) {
+                      return false;
+                    }
+                    for (var j = 0; j < db.length; j++) {
+                      var str1 = newItemName;
+                      var str2 = db[j].b;
+                      if (str1.toLowerCase() == str2.toLowerCase()) {
+                        id = db[j].a;
+                        newItemName = str2;
+                        break;
+                      }
+                    }
+
+                    if (id == -1) {
+                      $('#inject-form').val("Not found!");
+                      return false;
+                    }
+                    var iconid;
+                    $.getJSON("http://maple.fm/api/items?id=" + id, function(data) {
+                      iconid = data.item.icon;
+                      msg = "[url=http://maple.fm/db/items/" + id + 
+                          "[img]http://maple.fm/static/icon/"+ iconid + 
+                          ".png[/img]" + newItemName + "[/url]";
+                      $('#cke_contents_vB_Editor_QR_editor textarea').val(msg);
+                      $('.inject-btn').removeClass('showForm');
+                      
+                      
+                    });
                 }, 200);
               }
 
@@ -62,10 +96,47 @@ $(document).ready(function(){
           
           
           
-          
+          $('#inject-form').on("keypress", function(event) {
+            
+            if(event.which == 13){
+              $("#inject-form").autocomplete("close");
+
+              id = -1;
+              newItemName = $('#inject-form').val();
+              if (newItemName.length == 0) {
+                return false;
+              }
+              for (var j = 0; j < db.length; j++) {
+                var str1 = newItemName;
+                var str2 = db[j].b;
+                if (str1.toLowerCase() == str2.toLowerCase()) {
+                  id = db[j].a;
+                  newItemName = str2;
+                  break;
+                }
+              }
+
+              if (id == -1) {
+                $('#inject-form').val("Not found!");
+                return false;
+              }
+              var iconid;
+              $.getJSON("http://maple.fm/api/items?id=" + id, function(data) {
+                iconid = data.item.icon;
+                $('.inject-btn').removeClass('showForm');
+                msg = "[url=http://maple.fm/db/items/" + id + 
+                    "[img]http://maple.fm/static/icon/"+ iconid + 
+                    ".png[/img]" + newItemName + "[/url]";
+              $('#cke_contents_vB_Editor_QR_editor textarea').val(msg);
+              });
+
+              return false;
+            }
+          });
           
           return ;
         }
+    
 
         console.log("NOPE5");
 
@@ -77,3 +148,5 @@ $(document).ready(function(){
   f();
 
 });
+
+
