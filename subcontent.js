@@ -27,12 +27,12 @@ $(document).ready(function(){
           //parent.insertBefore(searchform,button);
           
           $('.toggler').click(function(){
-             if( ! $('.inject-btn').hasClass("showForm") ){
-                $('.inject-btn').addClass("showForm");
-                $('#inject-form').focus();
+             if( ! $(this).parent().hasClass("showForm") ){
+                $(this).parent().addClass("showForm");
+                $(this).parent().find('#inject-form').focus();
              }
              else{
-                $('.inject-btn').removeClass("showForm");
+                $(this).parent().removeClass("showForm");
              }
           });
           
