@@ -17,7 +17,7 @@ input:focus {outline: none; }
   cursor: pointer;
 }
 
-#inject-form{
+.inject-form{
   margin-bottom: 30px;
   padding-left: 15px;
   width: 192px;
