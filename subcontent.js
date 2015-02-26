@@ -19,7 +19,6 @@ $(document).ready(function(){
               var target= targetarray[i];
               var parent = target.parentElement;
 
-              console.log(parent.childNodes.length);
               var loaded = false;
               for(var j=0;j < parent.childNodes.length; j++){
                 if( parent.childNodes[j].className == 'inject-btn' || parent.childNodes[j].className == 'inject-btn showForm' ){
