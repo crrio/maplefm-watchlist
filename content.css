@@ -48,7 +48,7 @@ input:focus {outline: none; }
   border: solid 1px #ddd;
   font-size: 13px;
   color: #aaa;
-  width: 170px !important;
+  width: 190px !important;
   position: absolute !important;
   /* top: 110px !important; */
   right: 90px !important;
