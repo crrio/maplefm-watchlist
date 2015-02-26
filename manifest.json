@@ -15,7 +15,7 @@
         {
             "matches": ["http://forum2.nexon.net/*"],
             "all_frames": true,
-            "js": ["jquery-1.11.2.min.js", "bower_components/jqueryui/jquery-ui.min.js", "subcontent.js"],
+            "js": ["jquery-1.11.2.min.js", "bower_components/jqueryui/jquery-ui.min.js", "subcontent.js","subcontent-edit.js"],
             "css": ["content.css"]
         }
   ]

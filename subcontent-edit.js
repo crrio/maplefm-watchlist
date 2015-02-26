@@ -3,7 +3,7 @@ $(document).ready(function(){
   var db;
   var f = function(){
       
-        var target = document.getElementById("vB_Editor_QR");
+        var target = document.getElementById("vB_Editor_QE_1");
         if(target != undefined){
           parent = target.parentElement;
           next = target.nextSibling;
@@ -12,8 +12,7 @@ $(document).ready(function(){
         
           
           button.innerHTML = '<img id="image" class="toggler" src="' + chrome.extension.getURL('maplefm-icon.png') + '" style="width: 25px; top: -50px; right: 10px;" />';
-          button.className = "inject-btn";
-          
+          button.className = "inject-btn QE1";
           
           parent.insertBefore(button, target);
           /*if (next) parent.insertBefore(button, next);
@@ -83,7 +82,7 @@ $(document).ready(function(){
                       msg = "[url=http://maple.fm/db/items/" + id + 
                           "][img]http://maple.fm/static/image/icon/"+ iconid + 
                           ".png[/img]" + newItemName + "[/url]";
-                      var original = $('#cke_contents_vB_Editor_QR_editor textarea').val();
+                      var original = $('#cke_contents_vB_Editor_QE_1_editor textarea').val();
                       $('#cke_contents_vB_Editor_QR_editor textarea').val( original + msg);
                       $('.inject-btn').removeClass('showForm');
                       
