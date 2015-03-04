@@ -1,8 +1,8 @@
 {
   "name": "Maple.fm Watchlist",
-  "version": "1.1",
+  "version": "1.0",
   "description":
-    "Shows off desktop notifications for each Maplestory's item in the wishlist",
+    "An extension that allows you to add items to a watchlist from Maple.fm, as well as receive desktop notifications whenever a new item is listed. It additionally adds a button to include item information while on the Nexon Forums.",
   "icons": {"16": "maple.png", "48": "maple.png", "128": "maple.png"},
   "permissions": [
     "notifications",
@@ -27,7 +27,7 @@
   "options_page": "options.html",
   "background": { "scripts": ["jquery-1.11.2.min.js", "bower_components/jquery-cookie/jquery.cookie.js", "background.js" ], "persistent":true },
   "manifest_version": 2,
-  
+
   "web_accessible_resources": [
     "maplefm-icon.png"
   ]
