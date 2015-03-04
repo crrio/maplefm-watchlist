@@ -27,8 +27,7 @@
   "options_page": "options.html",
   "background": { "scripts": ["jquery-1.11.2.min.js", "bower_components/jquery-cookie/jquery.cookie.js", "background.js" ], "persistent":true },
   "manifest_version": 2,
-
-  // crbug.com/134315
+  
   "web_accessible_resources": [
     "48.png",
     "maplefm-icon.png"
