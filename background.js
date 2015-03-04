@@ -62,6 +62,7 @@ function create() {
 
     oldone = $.cookie('result');
     resultlist = [];
+    $.cookie('result',resultlist);
     
     console.log(data); // use data as a generic object
     var json = data.fm_items;

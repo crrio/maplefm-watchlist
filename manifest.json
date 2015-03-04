@@ -31,4 +31,13 @@
   "web_accessible_resources": [
     "maplefm-icon.png"
   ]
+  
+  /*"app": {
+      "launch": {
+      "local_path": "popup.html",
+      "container": "panel",
+      "height": 560,
+      "width": 330
+     }
+  }*/
 }
