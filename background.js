@@ -8,7 +8,8 @@ var wishlist = [
   {"name":"[A] Nebulite (STR %)", "price": "2999999999"},*/
 ];
 
-var resultlist = [], oldone = [];
+var resultlist = [],
+  oldone = [];
 
 var db;
 
@@ -22,7 +23,7 @@ $.getJSON("http://maple.fm/api/list/items", function(data) {
 });
 
 if ($.cookie('option') == undefined) {
-  $.cookie('option', 'newonly'); 
+  $.cookie('option', 'newonly');
 }
 
 if ($.cookie('server') == undefined) {
@@ -35,7 +36,7 @@ if ($.cookie('wishlist') != undefined) {
 } else
   $.cookie('wishlist', wishlist);
 
-$.cookie('result', [] );
+$.cookie('result', []);
 
 var count;
 
@@ -62,8 +63,8 @@ function create() {
 
     oldone = $.cookie('result');
     resultlist = [];
-    $.cookie('result',resultlist);
-    
+    $.cookie('result', resultlist);
+
     console.log(data); // use data as a generic object
     var json = data.fm_items;
     notId = 0;
@@ -83,65 +84,64 @@ function create() {
           });
           $.cookie('result', resultlist);
 
-          if( $.cookie('option') == 'newonly' ){
-              var found = false;
-              console.log('this is ' + obj.name + obj.shop_name + obj.price + obj.room);
-              for(var i=0; i< oldone.length; i++){
-                  var o = oldone[i];
-                  console.log(o.name + o.shopname + o.price + o.fmroom);
-                  
-                  if( o.price == obj.price && o.shopname == obj.shop_name && o.name == obj.name && o.fmroom == obj.room)
-                   {
-                      console.log("FOUND!");
-                      found = true;
-                   }
+          if ($.cookie('option') == 'newonly') {
+            var found = false;
+            console.log('this is ' + obj.name + obj.shop_name + obj.price + obj.room);
+            for (var i = 0; i < oldone.length; i++) {
+              var o = oldone[i];
+              console.log(o.name + o.shopname + o.price + o.fmroom);
+
+              if (o.price == obj.price && o.shopname == obj.shop_name && o.name == obj.name && o.fmroom == obj.room) {
+                console.log("FOUND!");
+                found = true;
               }
-              
-              if( !found ){
-                var shopname = obj.shop_name;
-                if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
+            }
+
+            if (!found) {
+              var shopname = obj.shop_name;
+              if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
 
 
-                var notOption = {
-                  type: "basic",
-                  title: obj.name + " at FM " + obj.room,
-                  message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                  iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-                }
+              var notOption = {
+                type: "basic",
+                title: obj.name + " at FM " + obj.room,
+                message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+              }
 
-                chrome.notifications.create(notId.toString(), notOption, creationCallback);
-                notId++;
+              chrome.notifications.create(notId.toString(), notOption, creationCallback);
+              notId++;
             }
           }
-          
+
         }
       });
     });
 
-    
-    if ( $.cookie('option') == 'lowest' ){
-    
-        for (var i = 0; i < wishlist.length; i++) {
 
-          obj = noticenter[wishlist[i].name];
+    if ($.cookie('option') == 'lowest') {
 
-          if (obj == undefined) continue;
+      for (var i = 0; i < wishlist.length; i++) {
 
-          var shopname = obj.shop_name;
-          if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
+        obj = noticenter[wishlist[i].name];
+
+        if (obj == undefined) continue;
+
+        var shopname = obj.shop_name;
+        if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
 
 
-          var notOption = {
-            type: "basic",
-            title: obj.name + " at FM " + obj.room,
-            message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-            iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-          }
-
-          chrome.notifications.create(notId.toString(), notOption, creationCallback);
-          notId++;
+        var notOption = {
+          type: "basic",
+          title: obj.name + " at FM " + obj.room,
+          message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+          iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
         }
-      
+
+        chrome.notifications.create(notId.toString(), notOption, creationCallback);
+        notId++;
+      }
+
     }
   });
 
