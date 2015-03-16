@@ -30,6 +30,15 @@ $(document).ready(function() {
         var target = targetarray[i];
         var parent = target.parentElement;
 
+        var loaded = false;
+        for (var j = 0; j < parent.childNodes.length; j++) {
+          if (parent.childNodes[j].className == 'inject-btn'){
+            loaded = true;
+          }
+        }
+        if (loaded)
+          continue;
+        
         next = target.nextSibling;
         button = document.createElement("div");
 
@@ -56,9 +65,14 @@ $(document).ready(function() {
         });
 
       }
+      $('#search_results_table_wrapper').one('DOMNodeInserted', function() {
+        $('#search_results_table_wrapper').unbind();
+        f();
+      });
     }
 
     f();
+    
   });
 
 });
