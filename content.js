@@ -1,26 +1,64 @@
-$(document).ready(function(){
+var added = false;
 
-  var f = function(){
-        var buttonOnSite = document.getElementById("gnt_play");
-        if(buttonOnSite != undefined){
-          parent = buttonOnSite.parentElement;
-          next = buttonOnSite.nextSibling;
-          button = document.createElement("button");
-          text = document.createTextNode("test");
+var $insertTarget = new Array();
 
-          button.appendChild(text);
-          if (next) parent.insertBefore(button, next);
-          else parent.appendChild(button);
-          return ;
-        }
+function modal_string(item_name){
+   var s = '<div class="ui small modal"><i class="close icon"></i><div class="header">Watch an item: ' + item_name + ' </div><div class="content"> <div class="ui form"><div class="field"><label>Notify me when this item is cheaper than</label> <input> </div> </div></div><div class="actions"><div class="ui button">Cancel</div><div class="ui green ok button">Watch!</div></div></div>';
+   return s;
+}
 
-        console.log("NOPE2");
+$(document).ready(function() {
 
-        setTimeout(function() {
-          f();
-        }, 1000);
-  }
+  var db;
+  $.getJSON("http://maple.fm/api/list/items", function(data) {
 
-  f();
+    var pricemodal = document.createElement("div");
+    pricemodal.innerHTML = modal_string('nothing');
+    document.body.appendChild(pricemodal);
+        
+    db = data;
+
+    var f = function() {
+
+      var targetarray = document.getElementsByClassName("item-popover");
+
+      var changed = 0;
+      
+      console.log(targetarray.length);
+
+      for (var i = 0; i < targetarray.length; i++) {
+        var target = targetarray[i];
+        var parent = target.parentElement;
+
+        next = target.nextSibling;
+        button = document.createElement("div");
+
+        button.innerHTML = 'Watch';
+        button.className = "inject-btn";
+
+        if (target) parent.insertBefore(button, target);
+        else parent.appendChild(button);
+
+        var items = data.map(function(x) {
+          return x.b
+        });
+
+
+        $('.inject-btn').unbind().on('click', function(e) {
+            var item = $(this).parent().find('a').text();
+            $('.header').text('Watch an item: ' + item);
+            $('.small.modal').modal({
+              closable: true,
+              onApprove : function(){
+                chrome.extension.sendRequest({message: item+"|"+$('.field').find('input').val()});
+              }  
+            }).modal('show');
+        });
+
+      }
+    }
+
+    f();
+  });
 
 });

@@ -55,6 +55,28 @@ function show() {
 
 }
 
+chrome.extension.onRequest.addListener(function(request, sender)
+{
+    var str = request.message.split("|");
+    var newItemName = str[0];
+    var price = str[1];
+  
+    for (var j = 0; j < db.length; j++) {
+      var str1 = newItemName;
+      var str2 = db[j].b;
+      if (str1.toLowerCase() == str2.toLowerCase()) {
+        id = db[j].a;
+        newItemName = str2;
+        break;
+      }
+    }  
+    var iconid;
+    $.getJSON("http://maple.fm/api/items?id=" + id, function(data) {
+      iconid = data.item.icon;
+      additem(newItemName,price,iconid);
+    });
+});
+
 function create() {
 
   console.log("bg" + $.cookie('server'));

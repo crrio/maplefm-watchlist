@@ -1,0 +1,32 @@
+input:focus {outline: none; }
+
+.inject-btn {
+  float: right;
+  margin-top: 0px;
+  margin-left: 5px;
+  left: 10px;
+  width: 50px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid rgba(0,0,0,0.05); border-radius: 5px; padding: 5px 6px 5px 5px;
+  box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -webkit-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -moz-box-shadow: 0px 0px 1px 0.00px rgba(0, 0, 0, 0.26);
+  -webkit-transition: all .2s;
+  overflow: hidden;
+  color: #488AC7;
+}
+
+.inject-btn:hover{
+  cursor: pointer;
+}
+
+.helper{
+  vertical-align: middle;
+  height: 100%;
+  display: inline-block;
+}
+
+.modal{
+  height: 169px !important; 
+}

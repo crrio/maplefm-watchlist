@@ -17,7 +17,14 @@
             "all_frames": true,
             "js": ["jquery-1.11.2.min.js", "bower_components/jqueryui/jquery-ui.min.js", "subcontent.js"],
             "css": ["content.css"]
+        },
+    
+        {   
+            "matches": ["http://maple.fm/*"],
+            "js": ["jquery-1.11.2.min.js", "dist/semantic.min.js", "content.js"],
+            "css": ["maplefm.css", "dist/semantic.min.css"]
         }
+    
   ]
   ,
   "browser_action": {
