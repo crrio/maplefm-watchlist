@@ -47,8 +47,7 @@ $(document).ready(function() {
         var items = data.map(function(x) {
           return x.b
         });
-
-
+        
         $(".inject-form").autocomplete({
           source: function(request, response) {
             var results = $.ui.autocomplete.filter(items, request.term);

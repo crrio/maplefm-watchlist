@@ -28,5 +28,6 @@ input:focus {outline: none; }
 }
 
 .modal{
-  height: 169px !important; 
+  height: 182px !important; 
+  font-size: 12px !important;
 }

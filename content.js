@@ -3,19 +3,20 @@ var added = false;
 var $insertTarget = new Array();
 
 function modal_string(item_name){
-   var s = '<div class="ui small modal"><i class="close icon"></i><div class="header">Watch an item: ' + item_name + ' </div><div class="content"> <div class="ui form"><div class="field"><label>Notify me when this item is cheaper than</label> <input> </div> </div></div><div class="actions"><div class="ui button">Cancel</div><div class="ui green ok button">Watch!</div></div></div>';
+   var s = '<div class="ui small modal"><i class="close icon"></i><div class="header">Watch an item: ' + item_name + ' </div><div class="content"> <div class="ui form"><div class="field"><div class="description">Notify me when this item is cheaper than</div> <input> </div> </div></div><div class="actions"><div class="ui button">Cancel</div><div class="ui green ok button">Watch!</div></div></div>';
    return s;
 }
 
 $(document).ready(function() {
-
   var db;
   $.getJSON("http://maple.fm/api/list/items", function(data) {
 
     var pricemodal = document.createElement("div");
     pricemodal.innerHTML = modal_string('nothing');
     document.body.appendChild(pricemodal);
-        
+    
+    $('.field').find('input').numeric();
+    
     db = data;
 
     var f = function() {

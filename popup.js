@@ -36,7 +36,7 @@ function reload() {
   var idIndex = {};
 
   var count = 0;
-
+  
   for (var i = 0; i < wishlist.length; i++) {
     var imgsite = wishlist[i].icon == null ? 'maple.png' : 'http://maple.fm/static/image/icon/' + wishlist[i].icon + '.png';
     $('.watchlist').append("<div class=\"item\"><img class=\"item-icon\" src=" + imgsite + "/><div class=\"helper\"></div><div class=\"name\">" + shorten(wishlist[i].name) + "</div><div class=\"price\">" + wishlist[i].price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " meso or less</div><span class=\"octicon octicon-x\" id=\"" + wishlist[i].name + "\"></span></div>");
@@ -102,6 +102,16 @@ function reload() {
     event.preventDefault();
 
     if ($('.addprice').val().length == 0) {
+      return false;
+    }
+    if( !$.isNumeric($('.addprice').val().replace(/,/g, '')) ){
+      swal({
+        title: "Error!",
+        text: "Only the number is allowed.",
+        type: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#ffb484"
+      });
       return false;
     }
     $(".addprice").val($(".addprice").val().replace(/,/g, ''));
