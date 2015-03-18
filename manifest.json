@@ -1,6 +1,6 @@
 {
   "name": "Maple.fm Watchlist",
-  "version": "1.0",
+  "version": "1.1",
   "description":
     "Allows you to add items to a watchlist from Maple.fm and receive desktop notifications whenever a new item is listed.",
   "icons": {"16": "maple.png", "48": "maple.png", "128": "maple.png"},
