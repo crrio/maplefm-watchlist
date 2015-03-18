@@ -155,18 +155,26 @@ function create(option) {
                   }
 
                   UrlExists('http://maple.fm/static/image/icon/' + obj.icon + '.png', function(status){
-                    if(status === 404){
-                       notOption = {
-                          type: "basic",
-                          title: obj.name + " at FM " + obj.room,
-                          message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                          iconUrl: 'maple.png'
-                       }
-                    }
+            
+                     var notOption = {
+                        type: "basic",
+                        title: obj.name + " at FM " + obj.room,
+                        message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                        iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+                      }
+                      if( status == 404 ){
+                          notOption = {
+                            type: "basic",
+                            title: obj.name + " at FM " + obj.room,
+                            message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                            iconUrl: 'maple.png',
+                          }
+                      }
 
-                    chrome.notifications.create(notId.toString(), notOption, creationCallback);
-                    notId++;            
-                  });
+                      chrome.notifications.create(notId.toString(), notOption, creationCallback);
+                      notId++;            
+
+                    });
                 }
               }
 
@@ -177,42 +185,40 @@ function create(option) {
 
         if ( option == 'lowest') {
 
-          for (var i = 0; i < wishlist.length; i++) {
+          $.each(wishlist, function(index, result){
 
-            obj = noticenter[wishlist[i].name];
+            var obj = noticenter[result.name];
 
-            if (obj == undefined) continue;
+            if (obj == undefined) return;
 
             var shopname = obj.shop_name;
             if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
 
             console.log(obj.icon, obj.name);
             
-            var notOption = {
-              type: "basic",
-              title: obj.name + " at FM " + obj.room,
-              message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-              iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-            }
-            
             UrlExists('http://maple.fm/static/image/icon/' + obj.icon + '.png', function(status){
-              if(status === 404){
-                 notOption = {
+            
+              var notOption = {
+                type: "basic",
+                title: obj.name + " at FM " + obj.room,
+                message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+              }
+              if( status == 404 ){
+                  notOption = {
                     type: "basic",
                     title: obj.name + " at FM " + obj.room,
                     message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                    iconUrl: 'maple.png'
-                 }
+                    iconUrl: 'maple.png',
+                  }
               }
-              
+
               chrome.notifications.create(notId.toString(), notOption, creationCallback);
               notId++;            
+
             });
             
-            
-
-            
-          }
+          });
 
         }
       });

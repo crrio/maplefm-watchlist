@@ -37,7 +37,9 @@
 
   "web_accessible_resources": [
     "maplefm-icon.png"
-  ]
+  ],
+  
+  "content_security_policy": "img-src 'self' http://maple.fm/; object-src 'self'; script-src 'self'"
   
   /*"app": {
       "launch": {
