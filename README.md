@@ -6,7 +6,7 @@ Additionally creates a button while browsing the MapleStory forums which allows 
 ### Features
 * Add/Remove items to the watchlist
 * Notification when the items with the preferred price become available
-* Cookie Storage
+* Sync Local Storage
 * Server choosing option
 * In-app item viewing
 * Auto complete
