@@ -44,6 +44,18 @@ chrome.storage.sync.set({'result': []});
 
 var count;
 
+function UrlExists(url, cb){
+    jQuery.ajax({
+        url:      url,
+        dataType: 'text',
+        type:     'GET',
+        complete:  function(xhr){
+            if(typeof cb === 'function')
+               cb.apply(this, [xhr.status]);
+        }
+    });
+}
+
 function show() {
 
   count = 0;
@@ -90,7 +102,7 @@ function create(option) {
   chrome.storage.sync.get('server', function(obj) {
       $.getJSON("http://maple.fm/api/2/search?server=" + obj['server'] + "&stats=0&desc=0", function(data) {
         
-        var oldone;
+        var oldone = [];
         
         chrome.storage.sync.get('result', function(obj) {
             oldone = obj['result']; 
@@ -134,8 +146,7 @@ function create(option) {
                 if (!found) {
                   var shopname = obj.shop_name;
                   if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
-
-
+                  
                   var notOption = {
                     type: "basic",
                     title: obj.name + " at FM " + obj.room,
@@ -143,8 +154,19 @@ function create(option) {
                     iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
                   }
 
-                  chrome.notifications.create(notId.toString(), notOption, creationCallback);
-                  notId++;
+                  UrlExists('http://maple.fm/static/image/icon/' + obj.icon + '.png', function(status){
+                    if(status === 404){
+                       notOption = {
+                          type: "basic",
+                          title: obj.name + " at FM " + obj.room,
+                          message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                          iconUrl: 'maple.png'
+                       }
+                    }
+
+                    chrome.notifications.create(notId.toString(), notOption, creationCallback);
+                    notId++;            
+                  });
                 }
               }
 
@@ -164,16 +186,32 @@ function create(option) {
             var shopname = obj.shop_name;
             if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
 
-
+            console.log(obj.icon, obj.name);
+            
             var notOption = {
               type: "basic",
               title: obj.name + " at FM " + obj.room,
               message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
               iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
             }
+            
+            UrlExists('http://maple.fm/static/image/icon/' + obj.icon + '.png', function(status){
+              if(status === 404){
+                 notOption = {
+                    type: "basic",
+                    title: obj.name + " at FM " + obj.room,
+                    message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                    iconUrl: 'maple.png'
+                 }
+              }
+              
+              chrome.notifications.create(notId.toString(), notOption, creationCallback);
+              notId++;            
+            });
+            
+            
 
-            chrome.notifications.create(notId.toString(), notOption, creationCallback);
-            notId++;
+            
           }
 
         }
