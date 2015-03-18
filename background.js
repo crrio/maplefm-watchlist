@@ -6,8 +6,7 @@ var wishlist = [
   {"name":"[A] Nebulite (STR %)", "price": "2999999999"},*/
 ];
 
-var resultlist = [],
-  oldone = [];
+var resultlist = [], oldone = [];
 
 var db;
 
@@ -67,10 +66,13 @@ function show() {
   }
 
   if (notId == 0)
-    chrome.storage.sync.set({'result': []}, function(){
-      chrome.storage.sync.get('option', function(obj){
-        create(obj['option']);
-      });
+    chrome.storage.sync.get('result', function(obj) {
+          oldone = obj['result'];
+          chrome.storage.sync.set({'result': []}, function(){
+            chrome.storage.sync.get('option', function(obj){
+              create(obj['option']);
+            });
+          });
     });
 
 }
@@ -102,125 +104,121 @@ function create(option) {
   chrome.storage.sync.get('server', function(obj) {
       $.getJSON("http://maple.fm/api/2/search?server=" + obj['server'] + "&stats=0&desc=0", function(data) {
         
-        var oldone = [];
-        
-        chrome.storage.sync.get('result', function(obj) {
-            oldone = obj['result']; 
-        });
-         
-        resultlist = [];
+          console.log("OLDONE", oldone);
 
-        console.log(data); // use data as a generic object
-        var json = data.fm_items;
-        notId = 0;
-        $.each(json, function(ind, obj) {
-          $.each(wishlist, function(index, result) {
-            if (result.name == obj.name && parseInt(result.price) >= parseInt(obj.price) && parseInt(obj.quantity) >= 1) {
+          resultlist = [];
 
-              if (noticenter[obj.name] == undefined || parseInt(noticenter[obj.name].price) > parseInt(obj.price)) {
-                noticenter[obj.name] = obj;
-              }
-              resultlist.push({
-                "shopname": obj.shop_name,
-                "price": obj.price,
-                "fmroom": obj.room,
-                "quantity": obj.quantity,
-                "name": obj.name
-              });
-              
-              chrome.storage.sync.set({'result': resultlist});
+          console.log(data); // use data as a generic object
+          var json = data.fm_items;
+          notId = 0;
+          $.each(json, function(ind, obj) {
+            $.each(wishlist, function(index, result) {
+              if (result.name == obj.name && parseInt(result.price) >= parseInt(obj.price) && parseInt(obj.quantity) >= 1) {
 
-              if ( option == 'newonly') {
-                var found = false;
-                console.log('this is ' + obj.name + obj.shop_name + obj.price + obj.room);
-                for (var i = 0; i < oldone.length; i++) {
-                  var o = oldone[i];
-                  console.log(o.name + o.shopname + o.price + o.fmroom);
+                if (noticenter[obj.name] == undefined || parseInt(noticenter[obj.name].price) > parseInt(obj.price)) {
+                  noticenter[obj.name] = obj;
+                }
+                resultlist.push({
+                  "shopname": obj.shop_name,
+                  "price": obj.price,
+                  "fmroom": obj.room,
+                  "quantity": obj.quantity,
+                  "name": obj.name
+                });
 
-                  if (o.price == obj.price && o.shopname == obj.shop_name && o.name == obj.name && o.fmroom == obj.room) {
-                    console.log("FOUND!");
-                    found = true;
+                chrome.storage.sync.set({'result': resultlist});
+                
+                if ( option == 'newonly') {
+                  var found = false;
+                  console.log('this is ' + obj.name + obj.shop_name + obj.price + obj.room);
+                  for (var i = 0; i < oldone.length; i++) {
+                    var o = oldone[i];
+                    console.log(o.name + o.shopname + o.price + o.fmroom);
+
+                    if (o.price == obj.price && o.shopname == obj.shop_name && o.name == obj.name && o.fmroom == obj.room) {
+                      console.log("FOUND!");
+                      found = true;
+                    }
+                  }
+
+                  if (!found) {
+                    var shopname = obj.shop_name;
+                    if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
+
+                    var notOption = {
+                      type: "basic",
+                      title: obj.name + " at FM " + obj.room,
+                      message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                      iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+                    }
+
+                    UrlExists('http://maple.fm/static/image/icon/' + obj.icon + '.png', function(status){
+
+                       var notOption = {
+                          type: "basic",
+                          title: obj.name + " at FM " + obj.room,
+                          message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                          iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+                        }
+                        if( status == 404 ){
+                            notOption = {
+                              type: "basic",
+                              title: obj.name + " at FM " + obj.room,
+                              message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                              iconUrl: 'maple.png',
+                            }
+                        }
+
+                        chrome.notifications.create(notId.toString(), notOption, creationCallback);
+                        notId++;            
+
+                      });
                   }
                 }
 
-                if (!found) {
-                  var shopname = obj.shop_name;
-                  if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
-                  
-                  var notOption = {
-                    type: "basic",
-                    title: obj.name + " at FM " + obj.room,
-                    message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                    iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-                  }
-
-                  UrlExists('http://maple.fm/static/image/icon/' + obj.icon + '.png', function(status){
-            
-                     var notOption = {
-                        type: "basic",
-                        title: obj.name + " at FM " + obj.room,
-                        message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                        iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-                      }
-                      if( status == 404 ){
-                          notOption = {
-                            type: "basic",
-                            title: obj.name + " at FM " + obj.room,
-                            message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                            iconUrl: 'maple.png',
-                          }
-                      }
-
-                      chrome.notifications.create(notId.toString(), notOption, creationCallback);
-                      notId++;            
-
-                    });
-                }
               }
-
-            }
+            });
           });
-        });
 
 
-        if ( option == 'lowest') {
+          if ( option == 'lowest') {
 
-          $.each(wishlist, function(index, result){
+            $.each(wishlist, function(index, result){
 
-            var obj = noticenter[result.name];
+              var obj = noticenter[result.name];
 
-            if (obj == undefined) return;
+              if (obj == undefined) return;
 
-            var shopname = obj.shop_name;
-            if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
+              var shopname = obj.shop_name;
+              if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
 
-            console.log(obj.icon, obj.name);
-            
-            UrlExists('http://maple.fm/static/image/icon/' + obj.icon + '.png', function(status){
-            
-              var notOption = {
-                type: "basic",
-                title: obj.name + " at FM " + obj.room,
-                message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-              }
-              if( status == 404 ){
-                  notOption = {
-                    type: "basic",
-                    title: obj.name + " at FM " + obj.room,
-                    message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                    iconUrl: 'maple.png',
-                  }
-              }
+              console.log(obj.icon, obj.name);
 
-              chrome.notifications.create(notId.toString(), notOption, creationCallback);
-              notId++;            
+              UrlExists('http://maple.fm/static/image/icon/' + obj.icon + '.png', function(status){
+
+                var notOption = {
+                  type: "basic",
+                  title: obj.name + " at FM " + obj.room,
+                  message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                  iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+                }
+                if( status == 404 ){
+                    notOption = {
+                      type: "basic",
+                      title: obj.name + " at FM " + obj.room,
+                      message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                      iconUrl: 'maple.png',
+                    }
+                }
+
+                chrome.notifications.create(notId.toString(), notOption, creationCallback);
+                notId++;            
+
+              });
 
             });
-            
-          });
 
-        }
+          }
       });
   });
 }
