@@ -104,8 +104,6 @@ function create(option) {
   chrome.storage.sync.get('server', function(obj) {
       $.getJSON("http://maple.fm/api/2/search?server=" + obj['server'] + "&stats=0&desc=0", function(data) {
         
-          console.log("OLDONE", oldone);
-
           resultlist = [];
 
           console.log(data); // use data as a generic object
