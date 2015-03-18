@@ -12,18 +12,21 @@ var fmservers = ["Scania", "Windia", "Bera", "Broa", "Khaini", "Ymck", "Gazed", 
 window.onload = reload;
 
 function reload() {
-  $.cookie.json = true;
-
-  if ($.cookie('option') == 'newonly')
-    $('.currentopt').text('  NEW');
-  else
-    $('.currentopt').text('  LOWEST');
-
+  
+  chrome.storage.sync.get('option' , function(obj) {
+      if ( obj['option']  == 'newonly')
+        $('.currentopt').text('  NEW');
+      else
+        $('.currentopt').text('  LOWEST');
+  });
+  
   console.log("success");
   $('.watchlist').empty();
-
-  wishlist = $.cookie('wishlist');
-
+  
+  chrome.storage.sync.get('wishlist', function(obj) {
+      wishlist = obj['wishlist'];
+  });
+        
   db = bgpage.db;
 
   console.log(wishlist);
@@ -128,14 +131,15 @@ function reload() {
 
     }, function() {
 
-      wishlist = $.cookie('wishlist');
-
-      $('.backbtn').css('display', 'none');
-      $('.octicon-gear').css('display', 'block');
-      $('.preview').css('left', 331 + 'px');
-      $('.page1').css('left', 0 + 'px');
-      $('.addbox').val("");
-      $('.addprice').val("");
+      chrome.storage.sync.get('wishlist', function(obj) {
+          wishlist = obj['wishlist'];
+          $('.backbtn').css('display', 'none');
+          $('.octicon-gear').css('display', 'block');
+          $('.preview').css('left', 331 + 'px');
+          $('.page1').css('left', 0 + 'px');
+          $('.addbox').val("");
+          $('.addprice').val("");
+      });
     });
     return false;
   });
@@ -169,17 +173,26 @@ function reload() {
     var par = $(this).parent();
     par.hide('fast', function() {
       par.remove();
-      wishlist = $.cookie('wishlist');
+      chrome.storage.sync.get('wishlist', function(obj) {
+          wishlist = obj['wishlist'];
+      });
     });
     return false;
   });
 
   $('.selectoption').on('click', '.suboption', function() {
-    $.cookie('option', $(this).attr('id'));
-    if ($.cookie('option') == 'newonly')
-      $('.currentopt').text('  NEW');
-    else
-      $('.currentopt').text('  LOWEST');
+    
+    var opt = $(this).attr('id');
+    
+    chrome.storage.sync.set({'option': opt} , function(obj) {
+          if ( opt  == 'newonly')
+            $('.currentopt').text('  NEW');
+          else
+            $('.currentopt').text('  LOWEST');
+    });
+    
+    
+    
   });
 
   $('.header').on('click', '.octicon-gear', function() {
@@ -194,7 +207,7 @@ function reload() {
     return bgpage.removeitem(itemid), $(".watchlist .octicon-x").each(function(index) {
       if ($(this).attr("id") == itemid) {
         $(this).parent().remove();
-        wishlist = $.cookie("wishlist");
+        chrome.storage.sync.set({'wishlist': wishlist});
       }
     }), $(".page1").css("left", "0px"), $(".owlOfMinerva").css("left", "331px"), $(".backbtn").css("display", "none"), $(".selectReplacement").css("display", "block"), $('.octicon-gear').css('display', 'block');
     !1;
@@ -228,47 +241,49 @@ function selectReplacement(obj) {
   ul.className = 'selectReplacement';
   ul.className += ' server';
   var opts = obj.options;
-  var selectedOpt = $.cookie('server');
+  chrome.storage.sync.get('server', function(server){
+      var selectedOpt = server['server'];
 
-  for (var i = 0; i < opts.length; i++) {
-    var li = document.createElement('li');
-    var txt = document.createTextNode(opts[i].text);
-    var img = document.createElement('img');
-    img.className = 'server-icon';
-    img.src = "http://maple.fm/img/worlds/" + opts[i].id + ".png";
+      for (var i = 0; i < opts.length; i++) {
+        var li = document.createElement('li');
+        var txt = document.createTextNode(opts[i].text);
+        var img = document.createElement('img');
+        img.className = 'server-icon';
+        img.src = "http://maple.fm/img/worlds/" + opts[i].id + ".png";
 
-    li.appendChild(img);
-    li.appendChild(txt);
-    li.selIndex = opts[i].index;
-    li.selectID = obj.id;
-    li.onclick = function(event) {
-      event.stopPropagation();
-      selectMe(this);
-    }
-    if (i == selectedOpt) {
-      li.className = 'selected';
-      li.onclick = function() {
-        event.stopPropagation(event);
-        this.parentNode.className += ' selectOpen';
-        this.onclick = function(event) {
+        li.appendChild(img);
+        li.appendChild(txt);
+        li.selIndex = opts[i].index;
+        li.selectID = obj.id;
+        li.onclick = function(event) {
           event.stopPropagation();
           selectMe(this);
         }
+        if (i == selectedOpt) {
+          li.className = 'selected';
+          li.onclick = function() {
+            event.stopPropagation(event);
+            this.parentNode.className += ' selectOpen';
+            this.onclick = function(event) {
+              event.stopPropagation();
+              selectMe(this);
+            }
+          }
+        }
+        if (window.attachEvent) {
+          li.onmouseover = function() {
+            this.className += ' hover';
+          }
+          li.onmouseout = function() {
+            this.className = this.className.replace(new RegExp(" hover\\b"), '');
+          }
+        }
+        ul.appendChild(li);
       }
-    }
-    if (window.attachEvent) {
-      li.onmouseover = function() {
-        this.className += ' hover';
-      }
-      li.onmouseout = function() {
-        this.className = this.className.replace(new RegExp(" hover\\b"), '');
-      }
-    }
-    ul.appendChild(li);
-  }
-  obj.parentNode.appendChild(ul);
+      obj.parentNode.appendChild(ul);
 
-  addAutoComplete();
+      addAutoComplete();
+  });
 }
 
 function addAutoComplete() {
@@ -321,15 +336,16 @@ function selectMe(obj) {
 function setVal(objID, selIndex, name) {
   var obj = document.getElementById(objID);
   obj.selectedIndex = selIndex;
-  $.cookie('server', selIndex);
-  swal({
-    title: "Kaboom!",
-    text: "You are now watching " + name,
-    type: "success",
-    confirmButtonText: "OK",
+  chrome.storage.sync.set({'server': selIndex}, function(){
+      swal({
+        title: "Kaboom!",
+        text: "You are now watching " + name,
+        type: "success",
+        confirmButtonText: "OK",
 
-  }, function() {
-    bgpage.show();
+      }, function() {
+        bgpage.show();
+      });
   });
 }
 
@@ -363,8 +379,10 @@ function viewResult(item) {
       .replace(/>/g, '&gt;');
   }
 
-  result = $.cookie("result").sort(function(a, b) {
-    return parseInt(a.price) - parseInt(b.price);
+  chrome.storage.sync.get('result', function(obj){
+      result = obj['result'].sort(function(a, b) {
+        return parseInt(a.price) - parseInt(b.price);
+      });
   });
 
   for (var i = 0; i < result.length; i++) {

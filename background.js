@@ -1,5 +1,3 @@
-$.cookie.json = true;
-
 var wishlist = [
   /*{"name":"Lightning God Ring","price":"9999999998"},
   {"name":"Ice Cold Red", "price": "2999999999"},
@@ -22,21 +20,27 @@ $.getJSON("http://maple.fm/api/list/items", function(data) {
   console.log(db);
 });
 
-if ($.cookie('option') == undefined) {
-  $.cookie('option', 'newonly');
-}
+chrome.storage.sync.get('option', function(obj) {
+    if (obj['option'] == undefined) {
+      chrome.storage.sync.set({'option':'newonly'});
+    }
+});
 
-if ($.cookie('server') == undefined) {
-  $.cookie('server', '0');
-}
+chrome.storage.sync.get('server', function(obj) {
+    if (obj['server'] == undefined) {
+      chrome.storage.sync.set({'server': '0'});
+    }
+});
 
-if ($.cookie('wishlist') != undefined) {
-  console.log($.cookie('wishlist'));
-  wishlist = $.cookie('wishlist');
-} else
-  $.cookie('wishlist', wishlist);
+chrome.storage.sync.get('wishlist', function(obj) {
+    if (obj['wishlist'] != undefined) {
+      wishlist = obj['wishlist'];
+    }
+    else
+      chrome.storage.sync.set({'wishlist': wishlist});
+});
 
-$.cookie('result', []);
+chrome.storage.sync.set({'result': []});
 
 var count;
 
@@ -51,7 +55,11 @@ function show() {
   }
 
   if (notId == 0)
-    create();
+    chrome.storage.sync.set({'result': []}, function(){
+      chrome.storage.sync.get('option', function(obj){
+        create(obj['option']);
+      });
+    });
 
 }
 
@@ -77,96 +85,100 @@ chrome.extension.onRequest.addListener(function(request, sender)
     });
 });
 
-function create() {
+function create(option) {
 
-  console.log("bg" + $.cookie('server'));
+  chrome.storage.sync.get('server', function(obj) {
+      $.getJSON("http://maple.fm/api/2/search?server=" + obj['server'] + "&stats=0&desc=0", function(data) {
+        
+        var oldone;
+        
+        chrome.storage.sync.get('result', function(obj) {
+            oldone = obj['result']; 
+        });
+         
+        resultlist = [];
 
-  $.getJSON("http://maple.fm/api/2/search?server=" + $.cookie('server') + "&stats=0&desc=0", function(data) {
+        console.log(data); // use data as a generic object
+        var json = data.fm_items;
+        notId = 0;
+        $.each(json, function(ind, obj) {
+          $.each(wishlist, function(index, result) {
+            if (result.name == obj.name && parseInt(result.price) >= parseInt(obj.price) && parseInt(obj.quantity) >= 1) {
 
-    oldone = $.cookie('result');
-    resultlist = [];
-    $.cookie('result', resultlist);
+              if (noticenter[obj.name] == undefined || parseInt(noticenter[obj.name].price) > parseInt(obj.price)) {
+                noticenter[obj.name] = obj;
+              }
+              resultlist.push({
+                "shopname": obj.shop_name,
+                "price": obj.price,
+                "fmroom": obj.room,
+                "quantity": obj.quantity,
+                "name": obj.name
+              });
+              
+              chrome.storage.sync.set({'result': resultlist});
 
-    console.log(data); // use data as a generic object
-    var json = data.fm_items;
-    notId = 0;
-    $.each(json, function(ind, obj) {
-      $.each(wishlist, function(index, result) {
-        if (result.name == obj.name && parseInt(result.price) >= parseInt(obj.price) && parseInt(obj.quantity) >= 1) {
+              if ( option == 'newonly') {
+                var found = false;
+                console.log('this is ' + obj.name + obj.shop_name + obj.price + obj.room);
+                for (var i = 0; i < oldone.length; i++) {
+                  var o = oldone[i];
+                  console.log(o.name + o.shopname + o.price + o.fmroom);
 
-          if (noticenter[obj.name] == undefined || parseInt(noticenter[obj.name].price) > parseInt(obj.price)) {
-            noticenter[obj.name] = obj;
-          }
-          resultlist.push({
-            "shopname": obj.shop_name,
-            "price": obj.price,
-            "fmroom": obj.room,
-            "quantity": obj.quantity,
-            "name": obj.name
+                  if (o.price == obj.price && o.shopname == obj.shop_name && o.name == obj.name && o.fmroom == obj.room) {
+                    console.log("FOUND!");
+                    found = true;
+                  }
+                }
+
+                if (!found) {
+                  var shopname = obj.shop_name;
+                  if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
+
+
+                  var notOption = {
+                    type: "basic",
+                    title: obj.name + " at FM " + obj.room,
+                    message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+                    iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
+                  }
+
+                  chrome.notifications.create(notId.toString(), notOption, creationCallback);
+                  notId++;
+                }
+              }
+
+            }
           });
-          $.cookie('result', resultlist);
+        });
 
-          if ($.cookie('option') == 'newonly') {
-            var found = false;
-            console.log('this is ' + obj.name + obj.shop_name + obj.price + obj.room);
-            for (var i = 0; i < oldone.length; i++) {
-              var o = oldone[i];
-              console.log(o.name + o.shopname + o.price + o.fmroom);
 
-              if (o.price == obj.price && o.shopname == obj.shop_name && o.name == obj.name && o.fmroom == obj.room) {
-                console.log("FOUND!");
-                found = true;
-              }
+        if ( option == 'lowest') {
+
+          for (var i = 0; i < wishlist.length; i++) {
+
+            obj = noticenter[wishlist[i].name];
+
+            if (obj == undefined) continue;
+
+            var shopname = obj.shop_name;
+            if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
+
+
+            var notOption = {
+              type: "basic",
+              title: obj.name + " at FM " + obj.room,
+              message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
+              iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
             }
 
-            if (!found) {
-              var shopname = obj.shop_name;
-              if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
-
-
-              var notOption = {
-                type: "basic",
-                title: obj.name + " at FM " + obj.room,
-                message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-                iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-              }
-
-              chrome.notifications.create(notId.toString(), notOption, creationCallback);
-              notId++;
-            }
+            chrome.notifications.create(notId.toString(), notOption, creationCallback);
+            notId++;
           }
 
         }
       });
-    });
-
-
-    if ($.cookie('option') == 'lowest') {
-
-      for (var i = 0; i < wishlist.length; i++) {
-
-        obj = noticenter[wishlist[i].name];
-
-        if (obj == undefined) continue;
-
-        var shopname = obj.shop_name;
-        if (shopname.length > 25) shopname = shopname.substring(0, 25) + "...";
-
-
-        var notOption = {
-          type: "basic",
-          title: obj.name + " at FM " + obj.room,
-          message: obj.quantity + " pieces at " + obj.price + "\nShop: " + shopname,
-          iconUrl: 'http://maple.fm/static/image/icon/' + obj.icon + '.png',
-        }
-
-        chrome.notifications.create(notId.toString(), notOption, creationCallback);
-        notId++;
-      }
-
-    }
   });
-
 }
 
 function creationCallback(notID) {
@@ -191,10 +203,6 @@ if (JSON.parse(localStorage.isActivated)) {
   show();
 }
 
-$.cookie.defaults = {
-  expires: 365
-};
-
 var interval = 0; // The display interval, in minutes.
 
 setInterval(function() {
@@ -203,11 +211,9 @@ setInterval(function() {
     JSON.parse(localStorage.isActivated) &&
     localStorage.frequency <= interval
   ) {
-    chrome.notifications.getAll(function(notifications) {
-
-    });
-    show();
-    interval = 0;
+    
+      show();
+      interval = 0;
   }
 }, 60000);
 
@@ -217,8 +223,9 @@ function additem(itemName, itemPrice, icon) {
     "price": itemPrice,
     'icon': icon
   });
-  $.cookie('wishlist', wishlist);
-  show();
+  chrome.storage.sync.set({'wishlist': wishlist}, function(){
+      show();
+  });
 }
 
 function removeitem(itemName) {
@@ -229,7 +236,7 @@ function removeitem(itemName) {
     }
   });
   wishlist.splice(deleteindex, 1);
-  $.cookie('wishlist', wishlist);
+  chrome.storage.sync.set({'wishlist': wishlist});
 }
 
 function deletionCallback(notID) {
