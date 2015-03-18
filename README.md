@@ -6,11 +6,12 @@ Additionally creates a button while browsing the MapleStory forums which allows 
 ### Features
 * Add/Remove items to the watchlist
 * Notification when the items with the preferred price become available
-* Sync Local Storage
+* [Mar 18 Unpublished] Sync Local Storage
 * Server choosing option
 * In-app item viewing
 * Auto complete
 * Include item information within posts on forums
+* [Mar 16 Unpublished] Adding the item to watchlist from maple.fm directly
 
 ### Compiling
 
