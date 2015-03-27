@@ -25,7 +25,6 @@ function reload() {
   
   chrome.storage.sync.get('wishlist', function(obj) {
       wishlist = obj['wishlist'];
-  });
         
   db = bgpage.db;
 
@@ -231,8 +230,11 @@ function reload() {
       };
     }
   });
-
+  
+  });
+    
 }
+        
 
 function selectReplacement(obj) {
 
