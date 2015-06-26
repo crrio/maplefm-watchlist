@@ -7,7 +7,7 @@ var result = bgpage.resultlist;
 
 var newItemName;
 
-var fmservers = ["Scania", "Windia", "Bera", "Broa", "Khaini", "Ymck", "Gazed", "Bellonova", "Renegades"];
+var fmservers = ["Scania", "Windia", "Bera", "Khroa", "Mybckn", "Grazed"];
 
 window.onload = reload;
 
@@ -251,7 +251,21 @@ function selectReplacement(obj) {
         var txt = document.createTextNode(opts[i].text);
         var img = document.createElement('img');
         img.className = 'server-icon';
-        img.src = "http://maple.fm/img/worlds/" + opts[i].id + ".png";
+        switch(i){
+            case 0:
+            case 1:
+            case 2:
+                img.src = "http://maple.fm/img/worlds/" + opts[i].id + ".png";
+                break;
+            case 3:
+                img.src = "http://maple.fm/img/worlds/Khaini.png";
+                break;
+            case 4:
+                img.src = "http://maple.fm/img/worlds/Mardia.png";
+                break;
+            case 5:
+                img.src = "http://maple.fm/img/worlds/Galicia.png"
+        }
 
         li.appendChild(img);
         li.appendChild(txt);
